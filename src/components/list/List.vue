@@ -47,7 +47,7 @@ const forms = ref([
     views: "0",
   },
   {
-    formId: 1,
+    formId: 6,
     formName: "Form1",
     formDescription: "Form description",
     formImage:
@@ -56,6 +56,14 @@ const forms = ref([
   },
 ]);
 
+const openedItem = ref(0);
+const lastOpenedItem = ref(0);
+
+function onListItemClicked(formId){
+  console.log("koko made")
+  lastOpenedItem.value = (openedItem.value == lastOpenedItem.value) ? 0 : openedItem.value;
+  openedItem.value = formId;
+}
 const totalItems = 114;
 </script>
 
@@ -96,9 +104,12 @@ const totalItems = 114;
         >
           <ListItem
             v-for="(form, index) in forms"
+            @list-item-clicked="onListItemClicked"
             :data="form"
             :key="form.formId"
             :position="start"
+            :open="(openedItem == form.formId)"
+            :close="(lastOpenedItem == form.formId)"
           />
         </ul>
         <ListPagination

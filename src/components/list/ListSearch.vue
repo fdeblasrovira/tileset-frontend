@@ -127,7 +127,7 @@ function changeSortBy(value, text) {
     </div>
     <button
       type="submit"
-      class="bg-tileset-blue p-2.5 ml-2 text-sm font-medium text-white rounded-lg hover:bg-tileset-light-blue"
+      class="bg-tileset-blue p-2.5 ml-2 text-sm font-medium text-white rounded-lg hover:bg-tileset-dark-blue"
     >
       <svg
         class="w-5 h-5 text-tileset-full-white"
