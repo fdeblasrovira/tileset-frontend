@@ -55,7 +55,7 @@ function changeSortBy(value, text) {
         >
           <p
             v-bind:class="sortByValue > 0 ? 'text-tileset-black' : 'text-tileset-grey-5'"
-            class="min-w-[8rem] text-left text-sm font-light"
+            class="max-w-[8rem] w-full whitespace-nowrap text-left text-sm font-light"
           >
             {{ sortByText }}
           </p>

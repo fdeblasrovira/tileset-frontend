@@ -90,13 +90,13 @@ function openListItem(e) {
     class="bg-tileset-white w-full border-none h-0"
   >
     <div
-      class="flex flex-row justify-center items-center h-full overflow-hidden"
+      class="flex flex-row justify-center items-center h-full overflow-hidden flex-wrap"
     >
       <BaseButton
         text="View"
         color="bg-tileset-grey-4"
         hover="hover:bg-tileset-grey-5"
-        class="mx-4"
+        class="m-2"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -122,7 +122,7 @@ function openListItem(e) {
         text="Edit"
         color="bg-tileset-green"
         hover="hover:bg-tileset-green-1"
-        class="mx-4"
+        class="m-2"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -139,12 +139,11 @@ function openListItem(e) {
           />
         </svg>
       </BaseButton>
-
       <BaseButton
         text="Share"
         color="bg-tileset-blue"
         hover="hover:bg-tileset-dark-blue"
-        class="mx-4"
+        class="m-2"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -165,7 +164,7 @@ function openListItem(e) {
         text="Statistics"
         color="bg-tileset-yellow"
         hover="hover:bg-tileset-yellow-1"
-        class="mx-4"
+        class="m-2"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -186,7 +185,7 @@ function openListItem(e) {
         text="Delete"
         color="bg-tileset-red"
         hover="hover:bg-tileset-red-1"
-        class="mx-4"
+        class="m-2"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -208,32 +207,91 @@ function openListItem(e) {
 </template>
 
 <style scoped>
-@keyframes expand {
-  from {
-    height: 0px;
+@media screen and (max-width: 407px) {
+  @keyframes expand {
+    from {
+      height: 0px;
+    }
+    to {
+      height: 228px;
+    }
   }
-  to {
-    height: 76px;
-  }
-}
 
-@keyframes collapse {
-  from {
-    height: 76px;
+  @keyframes collapse {
+    from {
+      height: 228px;
+    }
+    to {
+      height: 0px;
+    }
   }
-  to {
+  .itemListOpen {
+    height: 228px;
+    animation-name: expand;
+    animation-duration: 0.3s;
+  }
+  .itemListClose {
     height: 0px;
+    animation-name: collapse;
+    animation-duration: 0.3s;
   }
 }
+@media screen and (min-width: 408px) {
+  @keyframes expand {
+    from {
+      height: 0px;
+    }
+    to {
+      height: 152px;
+    }
+  }
 
-.itemListOpen {
-  height: 76px;
-  animation-name: expand;
-  animation-duration: 0.3s;
+  @keyframes collapse {
+    from {
+      height: 152px;
+    }
+    to {
+      height: 0px;
+    }
+  }
+  .itemListOpen {
+    height: 152px;
+    animation-name: expand;
+    animation-duration: 0.3s;
+  }
+  .itemListClose {
+    height: 0px;
+    animation-name: collapse;
+    animation-duration: 0.3s;
+  }
 }
-.itemListClose {
-  height: 0px;
-  animation-name: collapse;
-  animation-duration: 0.3s;
+@media screen and (min-width: 703px) {
+  @keyframes expand {
+    from {
+      height: 0px;
+    }
+    to {
+      height: 76px;
+    }
+  }
+
+  @keyframes collapse {
+    from {
+      height: 76px;
+    }
+    to {
+      height: 0px;
+    }
+  }
+  .itemListOpen {
+    height: 76px;
+    animation-name: expand;
+    animation-duration: 0.3s;
+  }
+  .itemListClose {
+    height: 0px;
+    animation-name: collapse;
+    animation-duration: 0.3s;
+  }
 }
 </style>
