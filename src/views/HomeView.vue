@@ -1,9 +1,10 @@
 <script setup>
-import TheWelcome from "../components/TheWelcome.vue";
+import List from "../components/list/List.vue";
+
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <div class="flex grow flex-col justify-center content-center">
+    <List />
+  </div>
 </template>
