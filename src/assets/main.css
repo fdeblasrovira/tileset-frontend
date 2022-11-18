@@ -852,6 +852,10 @@ video {
   height: 100%;
 }
 
+.h-\[40px\]{
+  height: 40px;
+}
+
 .max-h-fit{
   max-height: -moz-fit-content;
   max-height: fit-content;
@@ -956,6 +960,10 @@ video {
 
 .max-w-\[full\]{
   max-width: full;
+}
+
+.max-w-\[90\%\]{
+  max-width: 90%;
 }
 
 .flex-1{

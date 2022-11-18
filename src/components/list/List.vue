@@ -3,6 +3,7 @@ import { ref } from "vue";
 import ListItem from "./ListItem.vue";
 import ListPagination from "./ListPagination.vue";
 import ListSearch from "./ListSearch.vue";
+import BaseButton from "../buttons/BaseButtonWithIcon.vue";
 const forms = ref([
   {
     formId: 1,
@@ -61,16 +62,15 @@ const totalItems = 114;
 <template>
   <div class="flex justify-center">
     <div
-      class="relative flex grow flex-col max-w-[full] xl:max-w-[1024px] 2xl:max-w-[1024px] h-[100%] bg-tileset-full-white shadow-2xl p-6 rounded-lg"
+      class="relative flex grow flex-col max-w-[90%] xl:max-w-[1024px] 2xl:max-w-[1024px] h-[100%] bg-tileset-full-white shadow-2xl p-6 rounded-lg"
     >
-      <ListSearch />
       <div class="flex flex-row justify-between mb-3 items-center">
         <h2 class="text-lg mb-2 text-tileset-black">Forms: {{ totalItems }}</h2>
-        <button
-          class="flex h-8 hover:bg-tileset-green-1 bg-tileset-green justify-center rounded-md cursor-pointer px-2 items-center"
+        <BaseButton
+          text="Create"
+          color="bg-tileset-green"
+          hover="hover:bg-tileset-green-1"
         >
-          <h2 class="text-lg text-tileset-white font-bold mr-2">Create</h2>
-
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -84,8 +84,9 @@ const totalItems = 114;
               d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-        </button>
+        </BaseButton>
       </div>
+      <ListSearch />
 
       <div
         class="flex flex-col container min-w-full mx-auto items-center justify-center"
