@@ -1,5 +1,11 @@
 <script setup>
+import { ref } from "vue";
 import NavBar from "./components/header/NavBar.vue";
+import Spinner from "./components/overlays/Spinner.vue";
+import { useLoadingStore } from "@/stores/loading";
+
+const loadingData = useLoadingStore();
+
 </script>
 
 <template>
@@ -8,10 +14,12 @@ import NavBar from "./components/header/NavBar.vue";
       <NavBar />
     </header>
     <main class="flex justify-center grow overflow-y-scroll">
+      <Spinner :open="loadingData.loading" />
       <router-view></router-view>
     </main>
   </div>
 </template>
+
 
 <style scoped>
 .scrollbar-hide::-webkit-scrollbar {

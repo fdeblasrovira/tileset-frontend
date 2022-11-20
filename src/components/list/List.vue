@@ -4,6 +4,10 @@ import ListItem from "./ListItem.vue";
 import ListPagination from "./ListPagination.vue";
 import ListSearch from "./ListSearch.vue";
 import BaseButton from "../buttons/BaseButtonWithIcon.vue";
+import { useLoadingStore } from "@/stores/loading";
+
+const loadingData = useLoadingStore();
+
 const forms = ref([
   {
     formId: 1,
@@ -59,9 +63,10 @@ const forms = ref([
 const openedItem = ref(0);
 const lastOpenedItem = ref(0);
 
-function onListItemClicked(formId){
-  console.log("koko made")
-  lastOpenedItem.value = (openedItem.value == lastOpenedItem.value) ? 0 : openedItem.value;
+function onListItemClicked(formId) {
+  console.log("koko made");
+  lastOpenedItem.value =
+    openedItem.value == lastOpenedItem.value ? 0 : openedItem.value;
   openedItem.value = formId;
 }
 const totalItems = 114;
@@ -75,6 +80,7 @@ const totalItems = 114;
       <div class="flex flex-row justify-between mb-3 items-center">
         <h2 class="text-lg mb-2 text-tileset-black">Forms: {{ totalItems }}</h2>
         <BaseButton
+          @click="loadingData.loading = true"
           text="Create"
           color="bg-tileset-green"
           hover="hover:bg-tileset-green-1"
@@ -108,8 +114,8 @@ const totalItems = 114;
             :data="form"
             :key="form.formId"
             :position="start"
-            :open="(openedItem == form.formId)"
-            :close="(lastOpenedItem == form.formId)"
+            :open="openedItem == form.formId"
+            :close="lastOpenedItem == form.formId"
           />
         </ul>
         <ListPagination

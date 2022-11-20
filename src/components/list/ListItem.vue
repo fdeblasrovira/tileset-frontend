@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import BaseButton from "../buttons/BaseButtonWithIcon.vue";
-import Modal from "../overlays/modal.vue";
+import Modal from "../overlays/Modal.vue";
 
 const props = defineProps(["data", "position", "open", "close"]);
 const emit = defineEmits(["listItemClicked"]);
