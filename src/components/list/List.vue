@@ -10,7 +10,7 @@ import router from "../../router/index";
 const loadingData = useLoadingStore();
 
 const forms = ref([
-  /* {
+  {
     formId: 1,
     formName: "Form1",
     formDescription: "Form description",
@@ -58,7 +58,7 @@ const forms = ref([
     formImage:
       "https://raw.githubusercontent.com/IQAndreas/sample-images/gh-pages/100-100-color/00.jpg",
     views: "1670",
-  }, */
+  },
 ]);
 
 const openedItem = ref(0);

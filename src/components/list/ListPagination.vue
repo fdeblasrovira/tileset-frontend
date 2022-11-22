@@ -7,6 +7,8 @@ const offset = ref(0);
 
 const totalNumberOfPagination = Math.floor(props.totalItems / props.maxItemsPage) + 1;
 
+const elementsToDisplay = Math.min(props.maxPaginationItems, totalNumberOfPagination)
+
 const currentPagination = computed(() => {
   return Number(offset.value / props.maxItemsPage + 1);
 });
@@ -70,7 +72,7 @@ console.log("startingIndex", startingIndex.value)
           >Previous</a
         >
       </li>
-      <template v-for="i in props.maxPaginationItems">
+      <template v-for="i in elementsToDisplay">
         <ListPaginationItem
           @click="goToOffset(i + startingIndex)"
           v-if="i + startingIndex == currentPagination"
