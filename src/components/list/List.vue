@@ -10,7 +10,7 @@ import router from "../../router/index";
 const loadingData = useLoadingStore();
 
 const forms = ref([
-  {
+  /* {
     formId: 1,
     formName: "Form1",
     formDescription: "Form description",
@@ -58,7 +58,7 @@ const forms = ref([
     formImage:
       "https://raw.githubusercontent.com/IQAndreas/sample-images/gh-pages/100-100-color/00.jpg",
     views: "1670",
-  },
+  }, */
 ]);
 
 const openedItem = ref(0);
@@ -71,68 +71,86 @@ function onListItemClicked(formId) {
   openedItem.value = formId;
 }
 
-
-async function routeToCreate(){
+async function routeToCreate() {
   // Change global loading state to true
-  loadingData.loading = true
-  await router.push('/create');
-  loadingData.loading = false
+  loadingData.loading = true;
+  await router.push("/create");
+  loadingData.loading = false;
 }
 const totalItems = 114;
 </script>
 
 <template>
-  <div class="flex justify-center s">
-    <div
-      class="relative flex grow flex-col max-w-[90%] xl:max-w-[1024px] 2xl:max-w-[1024px] h-[100%] bg-tileset-full-white shadow-2xl p-6 rounded-lg"
+  <div class="flex flex-row justify-between mb-3 items-center">
+    <h2 class="text-lg mb-2 text-tileset-black">Forms: {{ totalItems }}</h2>
+    <BaseButton
+      @click="routeToCreate"
+      text="Create"
+      color="bg-tileset-green"
+      hover="hover:bg-tileset-green-1"
+      :class="{ glowingAnimation: forms.length <= 0 }"
     >
-      <div class="flex flex-row justify-between mb-3 items-center">
-        <h2 class="text-lg mb-2 text-tileset-black">Forms: {{ totalItems }}</h2>
-        <BaseButton
-          @click="routeToCreate"
-          text="Create"
-          color="bg-tileset-green"
-          hover="hover:bg-tileset-green-1"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            class="w-6 h-6 stroke-tileset-white m-auto"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-        </BaseButton>
-      </div>
-      <ListSearch />
-
-      <div
-        class="flex flex-col container min-w-full mx-auto items-center justify-center"
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        class="w-6 h-6 stroke-tileset-white m-auto"
       >
-        <ul
-          class="flex flex-col divide-y w-full bg-tileset-grey-1 rounded-lg shadow"
-        >
-          <ListItem
-            v-for="(form, index) in forms"
-            @list-item-clicked="onListItemClicked"
-            :data="form"
-            :key="form.formId"
-            :position="start"
-            :open="openedItem == form.formId"
-            :close="lastOpenedItem == form.formId"
-          />
-        </ul>
-        <ListPagination
-          :maxItemsPage="10"
-          :totalItems="totalItems"
-          :maxPaginationItems="5"
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
         />
+      </svg>
+    </BaseButton>
+  </div>
+  <ListSearch />
+
+  <div
+    class="flex flex-col container min-w-full mx-auto items-center justify-center"
+  >
+    <ul
+      class="flex flex-col divide-y w-full bg-tileset-grey-1 rounded-lg shadow"
+    >
+      <div
+        v-if="forms.length <= 0"
+        class="h-20 flex items-center m-auto font-light italic"
+      >
+        There are no forms yet
       </div>
-    </div>
+      <ListItem
+        v-for="(form, index) in forms"
+        @list-item-clicked="onListItemClicked"
+        :data="form"
+        :key="form.formId"
+        :position="start"
+        :open="openedItem == form.formId"
+        :close="lastOpenedItem == form.formId"
+      />
+    </ul>
+    <ListPagination
+      :maxItemsPage="10"
+      :totalItems="totalItems"
+      :maxPaginationItems="5"
+    />
   </div>
 </template>
+
+<style scoped>
+@keyframes glowing {
+  0% {
+    box-shadow: 0 0 5px #32b70a;
+  }
+  50% {
+    box-shadow: 0 0 20px #3fbf18;
+  }
+  100% {
+    box-shadow: 0 0 5px #32b70a;
+  }
+}
+
+.glowingAnimation {
+  animation: glowing 1300ms infinite;
+}
+</style>

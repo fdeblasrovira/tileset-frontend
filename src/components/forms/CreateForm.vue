@@ -1,6 +1,8 @@
 <script setup>
 import Input from "../inputs/Input.vue"
+import Textarea from "../inputs/Textarea.vue"
 import AvatarPicture from "../inputs/AvatarPicture.vue"
+import Radio from "../inputs/Radio.vue"
 </script>
 
 <template>
@@ -87,7 +89,12 @@ import AvatarPicture from "../inputs/AvatarPicture.vue"
                   </button>
                 </div>
               </div>
-                <AvatarPicture label="Form picture"/>
+                <AvatarPicture label="Form name"/>
+                <Input label="Form picture" name="form-name" type="text" placeholder="This is my form's name"/>
+                <Textarea label="Form description" name="form-description" placeholder="Description of the form"/>
+                <Radio label="This is a test 1" name="radio-1"/>
+                <Radio label="This is a test 1234567" name="radio-1"/>
+                <Radio label="This" name="radio-1"/>
 
               <div>
                 <label class="block text-sm font-medium text-gray-700"

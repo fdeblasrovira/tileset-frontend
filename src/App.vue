@@ -5,7 +5,6 @@ import Spinner from "./components/overlays/Spinner.vue";
 import { useLoadingStore } from "@/stores/loading";
 
 const loadingData = useLoadingStore();
-
 </script>
 
 <template>
@@ -16,10 +15,10 @@ const loadingData = useLoadingStore();
     <main class="flex justify-center grow overflow-y-scroll">
       <Spinner :open="loadingData.loading" />
       <router-view></router-view>
+      
     </main>
   </div>
 </template>
-
 
 <style scoped>
 .scrollbar-hide::-webkit-scrollbar {

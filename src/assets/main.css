@@ -1104,6 +1104,10 @@ select{
   height: 100%;
 }
 
+.h-20{
+  height: 5rem;
+}
+
 .max-h-fit{
   max-height: -moz-fit-content;
   max-height: fit-content;
@@ -1884,6 +1888,10 @@ select{
 
 .font-light{
   font-weight: 300;
+}
+
+.italic{
+  font-style: italic;
 }
 
 .leading-normal{
