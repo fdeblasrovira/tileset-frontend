@@ -10,7 +10,6 @@ const props = defineProps(['label', 'name', 'type', 'placeholder'])
     :type="props.type"
     :name="props.name"
     :id="props.name"
-    :autocomplete="props.name"
     :placeholder="props.placeholder"
     class="mt-1 block w-full h-10 rounded-md border font-normal shadow-sm focus:border-tileset-blue focus:ring-tileset-blue sm:text-sm"
   />

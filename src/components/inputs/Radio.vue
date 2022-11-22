@@ -1,21 +1,23 @@
 <script setup>
-const props = defineProps(["label", "name"]);
+const props = defineProps(["label", "name", 'id']);
 </script>
 
 <template>
   <div class="flex items-center">
     <input
-      :id="props.name"
+      :id="props.id"
       :name="props.name"
       type="radio"
-      class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+      class="h-4 w-4 mt-3 text-tileset-blue focus:ring-0"
     />
     <label
-    :for="props.name"
-      class="ml-3 block text-sm font-medium text-gray-700"
+    :for="props.id"
+      class="ml-3 block text-sm font-normal mt-3"
       >{{ props.label }}</label
     >
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>

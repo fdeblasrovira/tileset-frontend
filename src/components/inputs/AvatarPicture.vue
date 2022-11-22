@@ -47,7 +47,7 @@ function previewFiles(event) {
         @change="previewFiles"
         type="file"
         id="image-input"
-        class="ml-5 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 shadow-sm"
+        class="grow ml-5 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 shadow-sm"
       />
     </div>
   </div>

@@ -9,7 +9,6 @@ const props = defineProps(['label', 'name', 'placeholder'])
     <textarea
     :name="props.name"
     :id="props.name"
-    :autocomplete="props.name"
     :placeholder="props.placeholder"
     rows="3"
     class="mt-1 block w-full rounded-md border font-normal shadow-sm focus:border-tileset-blue focus:ring-tileset-blue sm:text-sm"
