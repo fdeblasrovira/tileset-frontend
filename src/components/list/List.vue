@@ -5,6 +5,7 @@ import ListPagination from "./ListPagination.vue";
 import ListSearch from "./ListSearch.vue";
 import BaseButton from "../buttons/BaseButtonWithIcon.vue";
 import { useLoadingStore } from "@/stores/loading";
+import router from "../../router/index";
 
 const loadingData = useLoadingStore();
 
@@ -69,6 +70,14 @@ function onListItemClicked(formId) {
     openedItem.value == lastOpenedItem.value ? 0 : openedItem.value;
   openedItem.value = formId;
 }
+
+
+async function routeToCreate(){
+  // Change global loading state to true
+  loadingData.loading = true
+  await router.push('/create');
+  loadingData.loading = false
+}
 const totalItems = 114;
 </script>
 
@@ -80,7 +89,7 @@ const totalItems = 114;
       <div class="flex flex-row justify-between mb-3 items-center">
         <h2 class="text-lg mb-2 text-tileset-black">Forms: {{ totalItems }}</h2>
         <BaseButton
-          @click="loadingData.loading = true"
+          @click="routeToCreate"
           text="Create"
           color="bg-tileset-green"
           hover="hover:bg-tileset-green-1"

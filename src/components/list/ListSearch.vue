@@ -37,7 +37,7 @@ function changeSortBy(value, text) {
       <input
         type="text"
         id="simple-search"
-        class="bg-tileset-full-white border border-tileset-grey-5 text-sm rounded-lg focus:ring-1 focus:ring-tileset-light-blue outline-tileset-blue focus:border-tileset-light-blue block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        class="bg-tileset-full-white border border-tileset-grey-5 text-sm rounded-lg focus:ring-1 focus:ring-tileset-blue outline-tileset-blue focus:border-tileset-blue block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         placeholder="Search"
         required
       />
@@ -74,19 +74,8 @@ function changeSortBy(value, text) {
           </svg>
         </button>
       </div>
-
-      <!--
-	  Dropdown menu, show/hide based on menu state.
-  
-	  Entering: "transition ease-out duration-100"
-		From: "transform opacity-0 scale-95"
-		To: "transform opacity-100 scale-100"
-	  Leaving: "transition ease-in duration-75"
-		From: "transform opacity-100 scale-100"
-		To: "transform opacity-0 scale-95"
-	-->
       <div
-        v-if="sortVisible"
+        :class="{ invisible: !sortVisible }"
         class="absolute right-0 z-10 mt-1 w-56 origin-top-right divide-gray-100 border rounded-md border-tileset-grey-5 bg-tileset-full-white shadow-lg"
         role="menu"
         aria-orientation="vertical"
