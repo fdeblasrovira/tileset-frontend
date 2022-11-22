@@ -9,7 +9,7 @@ const sortByValue = ref(0);
 function changeSortBy(value, text) {
   sortByValue.value = value;
   sortByText.value = text;
-  console.log(sortByValue.value)
+  console.log(sortByValue.value);
 }
 </script>
 
@@ -54,7 +54,9 @@ function changeSortBy(value, text) {
           aria-haspopup="true"
         >
           <p
-            v-bind:class="sortByValue > 0 ? 'text-tileset-black' : 'text-tileset-grey-5'"
+            v-bind:class="
+              sortByValue > 0 ? 'text-tileset-black' : 'text-tileset-grey-5'
+            "
             class="max-w-[8rem] w-full whitespace-nowrap text-left text-sm font-light"
           >
             {{ sortByText }}

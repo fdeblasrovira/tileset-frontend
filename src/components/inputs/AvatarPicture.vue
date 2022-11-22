@@ -10,7 +10,7 @@ function previewFiles(event) {
   reader.addEventListener("load", () => {
     image.value = reader.result;
     console.log(image.value);
-    
+
     /* document.querySelector(
       "#display-image"
     ).style.backgroundImage = `url(${uploaded_image})`; */
@@ -25,10 +25,12 @@ function previewFiles(event) {
       props.label
     }}</label>
     <div class="mt-1 flex items-center">
-      <span :style="{ 'backgroundImage': 'url(' + image + ')'}"
+      <span
+        :style="{ backgroundImage: 'url(' + image + ')' }"
         class="inline-flex h-12 w-12 overflow-hidden rounded-full bg-tileset-grey-2 bg-contain"
       >
-        <svg v-if="image.length <= 0"
+        <svg
+          v-if="image.length <= 0"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"

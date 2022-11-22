@@ -65,7 +65,6 @@ import Select from "../inputs/Select.vue";
               </p>
             </div>
 
-            
             <AvatarPicture label="Form name" />
             <Input
               label="Form picture"
@@ -92,7 +91,11 @@ import Select from "../inputs/Select.vue";
             <div class="block text-sm font-medium mt-3">
               <label class="block">Select one </label>
 
-              <Checkbox label="This is a test 1" name="checkbox-1" id="checkbox1" />
+              <Checkbox
+                label="This is a test 1"
+                name="checkbox-1"
+                id="checkbox1"
+              />
               <Checkbox
                 label="This is a test 1234567"
                 name="checkbox-1"

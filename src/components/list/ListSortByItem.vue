@@ -2,8 +2,8 @@
 const props = defineProps(["value", "text"]);
 const emit = defineEmits(["changeSortBy"]);
 
-function sortItemClick(){
-    emit("changeSortBy", props.value, props.text);
+function sortItemClick() {
+  emit("changeSortBy", props.value, props.text);
 }
 </script>
 
@@ -13,7 +13,7 @@ function sortItemClick(){
     class="block px-4 py-2 text-sm hover:bg-tileset-light-blue"
     role="menuitem"
     tabindex="-1"
-    >{{props.text}}</a
+    >{{ props.text }}</a
   >
 </template>
 

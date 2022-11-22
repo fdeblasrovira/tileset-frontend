@@ -5,31 +5,43 @@ import ListPaginationItem from "./ListPaginationItem.vue";
 const props = defineProps(["maxItemsPage", "totalItems", "maxPaginationItems"]);
 const offset = ref(0);
 
-const totalNumberOfPagination = Math.floor(props.totalItems / props.maxItemsPage) + 1;
+const totalNumberOfPagination =
+  Math.floor(props.totalItems / props.maxItemsPage) + 1;
 
-const elementsToDisplay = Math.min(props.maxPaginationItems, totalNumberOfPagination)
+const elementsToDisplay = Math.min(
+  props.maxPaginationItems,
+  totalNumberOfPagination
+);
 
 const currentPagination = computed(() => {
   return Number(offset.value / props.maxItemsPage + 1);
 });
 
-// Calculates the left-most index number of pagination 
+// Calculates the left-most index number of pagination
 const startingIndex = computed(() => {
   let additionalPaginationItems = Math.floor(props.maxPaginationItems / 2);
   if (currentPagination.value - additionalPaginationItems < 1) {
     // Pagination elements will start with 1
     return 0;
-  }
-  else if (currentPagination.value + additionalPaginationItems > totalNumberOfPagination){
+  } else if (
+    currentPagination.value + additionalPaginationItems >
+    totalNumberOfPagination
+  ) {
     // Pagination elements are reaching the end of the list
-    let overflowingAmount = currentPagination.value + additionalPaginationItems - totalNumberOfPagination;
-    return currentPagination.value - additionalPaginationItems - overflowingAmount -1;
-  }
-  else{
-    return currentPagination.value - additionalPaginationItems -1;
+    let overflowingAmount =
+      currentPagination.value +
+      additionalPaginationItems -
+      totalNumberOfPagination;
+    return (
+      currentPagination.value -
+      additionalPaginationItems -
+      overflowingAmount -
+      1
+    );
+  } else {
+    return currentPagination.value - additionalPaginationItems - 1;
   }
 });
-
 
 const emit = defineEmits(["next", "previous", "goto"]);
 
@@ -39,8 +51,7 @@ function nextOffset() {
     offset.value += props.maxItemsPage;
   }
   emit("next");
-console.log("startingIndex", startingIndex.value)
-
+  console.log("startingIndex", startingIndex.value);
 }
 
 function previousOffset() {
@@ -49,16 +60,14 @@ function previousOffset() {
     offset.value -= props.maxItemsPage;
   }
   emit("previous");
-console.log("startingIndex", startingIndex.value)
-
+  console.log("startingIndex", startingIndex.value);
 }
 
 function goToOffset(pagination) {
   // Set the offset to the clicked pagination
   offset.value = pagination * props.maxItemsPage - props.maxItemsPage;
   emit("goto");
-console.log("startingIndex", startingIndex.value)
-
+  console.log("startingIndex", startingIndex.value);
 }
 </script>
 
@@ -81,17 +90,13 @@ console.log("startingIndex", startingIndex.value)
         />
         <ListPaginationItem
           @click="goToOffset(i + startingIndex)"
-          v-else-if="
-            i + startingIndex > currentPagination 
-          "
+          v-else-if="i + startingIndex > currentPagination"
           :index="i + startingIndex"
           :selected="false"
         />
         <ListPaginationItem
           @click="goToOffset(i + startingIndex)"
-          v-else-if="
-            i + startingIndex < currentPagination
-          "
+          v-else-if="i + startingIndex < currentPagination"
           :index="i + startingIndex"
           :selected="false"
         />

@@ -10,7 +10,7 @@ const showUserMenu = ref(false);
 function changeUserMenuFocus(focus) {
   // showUserMenu.value = !showUserMenu.value;
   if (showUserMenu.value && focus) focus = false;
-  showUserMenu.value = focus
+  showUserMenu.value = focus;
 }
 </script>
 

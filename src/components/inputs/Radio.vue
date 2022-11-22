@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps(["label", "name", 'id']);
+const props = defineProps(["label", "name", "id"]);
 </script>
 
 <template>
@@ -10,14 +10,10 @@ const props = defineProps(["label", "name", 'id']);
       type="radio"
       class="h-4 w-4 mt-3 text-tileset-blue focus:ring-0"
     />
-    <label
-    :for="props.id"
-      class="ml-3 block text-sm font-normal mt-3"
-      >{{ props.label }}</label
-    >
+    <label :for="props.id" class="ml-3 block text-sm font-normal mt-3">{{
+      props.label
+    }}</label>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
