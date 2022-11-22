@@ -14,7 +14,6 @@ import FullButton from "../buttons/FullButton.vue";
       class=" sm:overflow-hidden sm:rounded-md bg-tileset-full-white flex flex-start flex-col grow"
     >
       <div class="border rounded-md border-tileset-grey-2 space-y-6 px-4 py-5 sm:p-6">
-        <AvatarPicture label="Form picture" />
         <Input
           label="Form name"
           name="form-name"
@@ -26,14 +25,14 @@ import FullButton from "../buttons/FullButton.vue";
           name="form-description"
           placeholder="Description of the form"
         />
+        <AvatarPicture label="Form picture" />
         <div class="block text-sm font-medium mt-3">
-          <label class="block">Select one </label>
+          <label class="block">Visibility</label>
 
-          <Radio label="This is a test 1" name="radio-1" id="radio1" />
-          <Radio label="This is a test 1234567" name="radio-1" id="radio2" />
-          <Radio label="This" name="radio-1" id="radio3" />
+          <Radio label="Public" name="general-info-visibility" id="visibility" />
+          <Radio label="Private" name="general-info-visibility" id="no-visibility" />
         </div>
-        <div class="block text-sm font-medium mt-3">
+        <!-- <div class="block text-sm font-medium mt-3">
           <label class="block">Select one </label>
 
           <Checkbox label="This is a test 1" name="checkbox-1" id="checkbox1" />
@@ -48,7 +47,7 @@ import FullButton from "../buttons/FullButton.vue";
           <option value="1">Japan</option>
           <option value="2">Spain</option>
           <option value="3">China</option>
-        </Select>
+        </Select> -->
       </div>
     </div>
     <FullButton

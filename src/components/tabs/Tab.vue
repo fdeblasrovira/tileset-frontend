@@ -3,7 +3,7 @@ const props = defineProps(["active"]);
 </script>
 
 <template>
-  <li class="flex grow relative" :class="props.active ? 'active' : 'inactive'">
+  <li class="flex grow relative cursor-pointer" :class="props.active ? 'active' : 'inactive'">
     <a
       href="#"
       class="grow h-12 py-3 px-4 trapezoid border-tileset-grey-4"
