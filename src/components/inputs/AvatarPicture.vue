@@ -10,10 +10,6 @@ function previewFiles(event) {
   reader.addEventListener("load", () => {
     image.value = reader.result;
     console.log(image.value);
-
-    /* document.querySelector(
-      "#display-image"
-    ).style.backgroundImage = `url(${uploaded_image})`; */
   });
   reader.readAsDataURL(event.target.files[0]);
 }
@@ -21,13 +17,13 @@ function previewFiles(event) {
 
 <template>
   <div>
-    <label class="block text-sm font-medium text-gray-700">{{
+    <label class="block text-sm font-medium">{{
       props.label
     }}</label>
-    <div class="mt-1 flex items-center">
+    <div class="my-3 flex items-center flex-col space-y-6">
       <span
         :style="{ backgroundImage: 'url(' + image + ')' }"
-        class="inline-flex h-12 w-12 overflow-hidden rounded-full bg-tileset-grey-2 bg-contain"
+        class="flex h-24 min-w-[3rem] w-24 overflow-hidden rounded-full bg-tileset-grey-2 bg-contain"
       >
         <svg
           v-if="image.length <= 0"
@@ -36,7 +32,7 @@ function previewFiles(event) {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="flex w-6 h-6 m-auto self-center"
+          class="flex w-12 h-12 m-auto self-center"
         >
           <path
             stroke-linecap="round"
@@ -49,7 +45,7 @@ function previewFiles(event) {
         @change="previewFiles"
         type="file"
         id="image-input"
-        class="grow ml-5 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 shadow-sm"
+        class="flex w-full focus:outline-tileset-blue rounded-md border border-tileset-grey-5 focus:border-tileset-blue focus:ring-tileset-blue py-2 px-3 text-sm font-normal  shadow-sm"
       />
     </div>
   </div>

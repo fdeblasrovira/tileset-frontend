@@ -6,7 +6,7 @@ const props = defineProps(["title", "route"]);
   <li>
     <router-link
       :to="props.route"
-      class="block py-2 px-4 text-sm text-gray-700 hover:bg-tileset-light-blue dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+      class="block py-2 px-4 text-sm hover:bg-tileset-light-blue"
       aria-current="page"
       >{{ props.title }}</router-link
     >

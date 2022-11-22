@@ -16,7 +16,7 @@ function changeUserMenuFocus(focus) {
 
 <template>
   <nav
-    class="flex grow bg-tileset-white pl-2 sm:px-4 py-0 dark:tileset-dark-blue border-b-2 border-b-tileset-grey-5 shadow-lg"
+    class="flex z-50 grow bg-tileset-white pl-2 sm:px-4 py-0 dark:tileset-dark-blue border-b-2 border-b-tileset-grey-5 shadow-lg"
   >
     <div
       class="mx-1 container flex flex-wrap justify-between items-center mx-auto w-full min-w-full grow-0"

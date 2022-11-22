@@ -12,7 +12,7 @@ const loadingData = useLoadingStore();
     <header class="flex min-h-min sticky top-0 z-10">
       <NavBar />
     </header>
-    <main class="flex justify-center grow overflow-y-scroll">
+    <main class="flex justify-center grow overflow-y-scroll flex-col">
       <Spinner :open="loadingData.loading" />
       <router-view></router-view>
       

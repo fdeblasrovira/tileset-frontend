@@ -27,7 +27,8 @@ module.exports = {
       'tileset-grey-2': '#dee2e6',
       'tileset-grey-3': '#ced4da',
       'tileset-grey-4': '#adb5bd',
-      'tileset-grey-5': '#6c757d'
+      'tileset-grey-5': '#6c757d',
+      'tileset-grey-6': '#444444'
     },
     extend: {},
   },
