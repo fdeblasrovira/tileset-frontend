@@ -10,7 +10,7 @@ const props = defineProps([
   "rightLabel",
 ]);
 
-const currentValue = ref(props.defaultValue)
+const currentValue = ref(props.defaultValue);
 
 const background = computed(
   () =>
@@ -26,12 +26,14 @@ const background = computed(
         {{ props.rightLabel }}
       </p>
     </div>
-    
-    <div class="flex justify-between relative w-full mt-[-22px] top-9 left-0 px-3 pointer-events-none z-0">
-        <div></div>
-        
-        <div v-for="n in props.max - 1" class="range-space"></div>
-        <div></div>
+
+    <div
+      class="flex justify-between relative w-full mt-[-22px] top-9 left-0 px-3 pointer-events-none z-0"
+    >
+      <div></div>
+
+      <div v-for="n in (Math.abs(props.min) + Math.abs(props.max) - 1)" class="range-space"></div>
+      <div></div>
     </div>
     <input
       type="range"
@@ -40,6 +42,7 @@ const background = computed(
       :max="props.max"
       class="w-full z-10 absolute"
       :style="background"
+      disabled
     />
     <div class="flex mt-10">
       <p class="w-full text-left text-sm font-medium">{{ props.min }}</p>
@@ -52,11 +55,11 @@ const background = computed(
 </template>
 
 <style scoped>
-.range-space{
-    height: 42px;
-    background-color: #666;
-    width: 2px;
-    z-index: 0;
+.range-space {
+  height: 42px;
+  background-color: #666;
+  width: 2px;
+  z-index: 0;
 }
 input[type="range"] {
   height: 42px;
@@ -71,7 +74,6 @@ input[type="range"]::-webkit-slider-runnable-track {
   width: 100%;
   height: 25px;
   cursor: pointer;
-  animate: 0.2s;
   box-shadow: 0px 0px 0px #000000;
   border-radius: 5px;
   border: 1px solid #000000;
@@ -91,7 +93,6 @@ input[type="range"]::-moz-range-track {
   width: 100%;
   height: 25px;
   cursor: pointer;
-  animate: 0.2s;
   box-shadow: 0px 0px 0px #000000;
   border-radius: 5px;
   border: 1px solid #000000;
@@ -109,7 +110,6 @@ input[type="range"]::-ms-track {
   width: 100%;
   height: 25px;
   cursor: pointer;
-  animate: 0.2s;
   background: transparent;
   border-color: transparent;
   color: transparent;

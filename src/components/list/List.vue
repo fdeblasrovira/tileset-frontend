@@ -65,7 +65,6 @@ const openedItem = ref(0);
 const lastOpenedItem = ref(0);
 
 function onListItemClicked(formId) {
-  console.log("koko made");
   lastOpenedItem.value =
     openedItem.value == lastOpenedItem.value ? 0 : openedItem.value;
   openedItem.value = formId;

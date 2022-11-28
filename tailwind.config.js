@@ -15,6 +15,7 @@ module.exports = {
       'tileset-white': '#f4f3ee',
       'tileset-light-blue': '#a8dadc',
       'tileset-blue': '#457b9d',
+      'tileset-blue-1': '#325871',
       'tileset-dark-blue': '#1d3557',
       'tileset-green': '#49a078',
       'tileset-green-1': '#397d5e',
