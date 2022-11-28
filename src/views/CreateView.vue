@@ -2,11 +2,13 @@
 import { ref } from "vue";
 import CreateForm from "../components/forms/CreateForm.vue";
 import Tab from "../components/tabs/Tab.vue";
+import { useCreateTabulation } from "@/stores/createTabulation";
 
-const activeTab = ref(1);
+const tabData = useCreateTabulation();
 
 function onTabClick(tabNumber) {
-  activeTab.value = tabNumber;
+  tabData.currentTab = tabNumber;
+  console.log(tabData.currentTab)
 }
 </script>
 
@@ -15,7 +17,7 @@ function onTabClick(tabNumber) {
     <ul
       class="flex mx-[2.25rem] grow text-sm font-medium text-center text-tileset-grey-6"
     >
-      <Tab @click="onTabClick(1)" :active="activeTab == 1">
+      <Tab @click="onTabClick(1)" :active="tabData.currentTab == 1">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -31,7 +33,7 @@ function onTabClick(tabNumber) {
           />
         </svg>
       </Tab>
-      <Tab @click="onTabClick(2)" :active="activeTab == 2">
+      <Tab @click="onTabClick(2)" :active="tabData.currentTab == 2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -47,7 +49,7 @@ function onTabClick(tabNumber) {
           />
         </svg>
       </Tab>
-      <Tab @click="onTabClick(3)" :active="activeTab == 3">
+      <Tab @click="onTabClick(3)" :active="tabData.currentTab == 3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -63,7 +65,7 @@ function onTabClick(tabNumber) {
           />
         </svg>
       </Tab>
-      <Tab @click="onTabClick(4)" :active="activeTab == 4">
+      <Tab @click="onTabClick(4)" :active="tabData.currentTab == 4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
