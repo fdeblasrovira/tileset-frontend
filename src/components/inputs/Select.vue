@@ -3,7 +3,7 @@ const props = defineProps(["label", "name", "id"]);
 </script>
 
 <template>
-  <label :for="props.id" class="block text-sm font-medium"
+  <label :for="props.id" class="block font-medium"
     >Country
     <select
       :id="props.id"

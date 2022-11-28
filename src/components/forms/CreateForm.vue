@@ -9,6 +9,10 @@ import Select from "../inputs/Select.vue";
 import FullButton from "../buttons/FullButton.vue";
 import { useCreateTabulation } from "@/stores/createTabulation";
 
+function saveContents(){
+
+}
+
 const tabData = useCreateTabulation();
 </script>
 
@@ -35,7 +39,7 @@ const tabData = useCreateTabulation();
         />
         <AvatarPicture label="Form picture" />
         <div class="block text-sm font-medium mt-3">
-          <label class="block">Visibility</label>
+          <label class="block text-base font-medium">Visibility</label>
 
           <Radio
             label="Public"
@@ -53,6 +57,7 @@ const tabData = useCreateTabulation();
         v-if="tabData.currentTab == 2"
         class="border rounded-md border-tileset-grey-2 space-y-6 px-4 py-5 sm:p-6"
       >
+        <label class="w-full text-left text-sm font-medium">Attributes</label>
         <Range
           min="0"
           max="10"
@@ -65,7 +70,7 @@ const tabData = useCreateTabulation();
         </Range>
       </div>
       <FullButton
-        @click="goToNext"
+        @click="saveContents"
         text="Save"
         color="bg-tileset-green"
         hover="hover:bg-tileset-green-1"

@@ -17,7 +17,7 @@ function previewFiles(event) {
 
 <template>
   <div>
-    <label class="block text-sm font-medium">{{
+    <label class="block font-medium">{{
       props.label
     }}</label>
     <div class="my-3 flex items-center flex-col space-y-6">

@@ -3,7 +3,7 @@ const props = defineProps(["label", "name", "placeholder"]);
 </script>
 
 <template>
-  <label :for="props.name" class="block text-sm font-medium"
+  <label :for="props.name" class="block font-medium"
     >{{ props.label }}
     <textarea
       :name="props.name"

@@ -3,7 +3,7 @@ const props = defineProps(["label", "name", "type", "placeholder"]);
 </script>
 
 <template>
-  <label :for="props.name" class="block text-sm font-medium"
+  <label :for="props.name" class="block font-medium"
     >{{ props.label }}
     <input
       :type="props.type"
