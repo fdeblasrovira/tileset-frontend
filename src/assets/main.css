@@ -1059,6 +1059,14 @@ select{
   margin-right: 1.25rem;
 }
 
+.-mt-2{
+  margin-top: -0.5rem;
+}
+
+.-mt-1{
+  margin-top: -0.25rem;
+}
+
 .mt-\[2rem\]{
   margin-top: 2rem;
 }
@@ -1339,11 +1347,6 @@ select{
 
 .origin-top-right{
   transform-origin: top right;
-}
-
-.translate-x-1\/2{
-  --tw-translate-x: 50%;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .translate-x-1{
@@ -2393,14 +2396,14 @@ select{
     padding: 0px;
   }
 
-  .sm\:px-4{
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-
   .sm\:px-6{
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+  }
+
+  .sm\:px-4{
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .sm\:pb-4{

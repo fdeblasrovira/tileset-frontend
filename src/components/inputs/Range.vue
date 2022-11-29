@@ -37,7 +37,7 @@ const background = computed(
     </div>
     <input
       type="range"
-      v-model="currentValue"
+      :value="props.defaultValue"
       :min="props.min"
       :max="props.max"
       class="w-full z-10 absolute"
@@ -46,7 +46,7 @@ const background = computed(
     />
     <div class="flex mt-10">
       <p class="w-full text-left text-sm font-medium">{{ props.min }}</p>
-      <p class="w-full text-center text-sm font-medium">{{ currentValue }}</p>
+      <p class="w-full text-center text-sm font-medium">{{ props.defaultValue }}</p>
       <p class="w-full text-right text-sm font-medium">
         {{ props.max }}
       </p>

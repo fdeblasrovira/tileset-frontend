@@ -1,5 +1,6 @@
 <script setup>
-const props = defineProps(["label", "name", "type", "placeholder"]);
+const props = defineProps(["label", "name", "type", "placeholder", "modelValue"]);
+const emits = defineEmits(["update:modelValue"]);
 </script>
 
 <template>
@@ -10,6 +11,8 @@ const props = defineProps(["label", "name", "type", "placeholder"]);
       :name="props.name"
       :id="props.name"
       :placeholder="props.placeholder"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
       class="mt-1 block w-full h-10 rounded-md border font-normal shadow-sm focus:border-tileset-blue focus:ring-tileset-blue sm:text-sm"
     />
   </label>
