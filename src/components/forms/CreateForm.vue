@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import Input from "../inputs/Input.vue";
 import Textarea from "../inputs/Textarea.vue";
 import AvatarPicture from "../inputs/AvatarPicture.vue";
@@ -7,6 +7,7 @@ import Radio from "../inputs/Radio.vue";
 import Range from "../inputs/Range.vue";
 import Checkbox from "../inputs/Checkbox.vue";
 import Select from "../inputs/Select.vue";
+import Modal from "../overlays/Modal.vue";
 import FullButton from "../buttons/FullButton.vue";
 import { useCreateTabulation } from "@/stores/createTabulation";
 
@@ -31,6 +32,31 @@ function addAttribute() {
   formData.attributes.push(defaultAttribute);
 }
 function saveContents() {}
+
+const showAttributeDeleteModal = ref(false);
+const showAttributeEditModal = ref(false);
+
+function displayAttributeDeleteModal(display) {
+  console.log("Modal display");
+  showAttributeDeleteModal.value = display;
+}
+
+function displayAttributeEditModal(display) {
+  console.log("Modal display");
+  showAttributeEditModal.value = display;
+}
+
+function deleteAttribute(index) {
+  showAttributeDeleteModal.value = false;
+  // Remove attribute in the specified index
+  formData.attributes.splice(index, 1);
+}
+
+function editAttribute(index) {
+  showAttributeDeleteModal.value = false;
+  // Remove attribute in the specified index
+  formData.attributes.splice(index, 1);
+}
 </script>
 
 <template>
@@ -70,12 +96,19 @@ function saveContents() {}
           />
         </div>
       </div>
+      <!-- Attribute edit tab contents -->
       <div
         v-if="tabData.currentTab == 2"
         class="border rounded-md border-tileset-grey-2 space-y-6 px-4 py-5 sm:p-6"
       >
         <label class="w-full text-left font-medium">Attributes</label>
-        <template v-for="attribute in formData.attributes">
+        <div
+          v-if="formData.attributes.length <= 0"
+          class="w-full h-10 text-center items-center m-auto font-light italic"
+        >
+          There are no attributes yet
+        </div>
+        <template v-for="(attribute, index) in formData.attributes">
           <div
             class="border rounded-md border-tileset-grey-2 space-y-6 px-4 py-5 sm:p-6"
           >
@@ -91,7 +124,7 @@ function saveContents() {}
             </Range>
             <div class="flex justify-between">
               <FullButton
-                @click="deleteAttribute"
+                @click="displayAttributeDeleteModal(true)"
                 text="Delete"
                 color="bg-tileset-red"
                 hover="hover:bg-tileset-red-1"
@@ -113,7 +146,7 @@ function saveContents() {}
                 </svg>
               </FullButton>
               <FullButton
-                @click="editAttribute"
+                @click="displayAttributeEditModal(true)"
                 text="Edit"
                 color="bg-tileset-green"
                 hover="hover:bg-tileset-green-1"
@@ -183,6 +216,52 @@ function saveContents() {}
       </FullButton>
     </div>
   </div>
+  <!-- Attribute delete modal -->
+  <Modal
+    :open="showAttributeDeleteModal"
+    title="Delete attribute"
+    description="Are you sure you want to delete this attribute?"
+  >
+    <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+      <button
+        @click="deleteAttribute(index - 1)"
+        type="button"
+        class="inline-flex w-full justify-center rounded-md border border-transparent bg-tileset-red px-4 py-2 text-base font-medium text-tileset-full-white shadow-sm hover:bg-tileset-red-1 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
+      >
+        Delete
+      </button>
+      <button
+        @click="showAttributeDeleteModal = false"
+        type="button"
+        class="mt-3 inline-flex w-full justify-center rounded-md border border-tileset-grey-5 px-4 py-2 text-base font-medium shadow-sm hover:bg-gray-50 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+      >
+        Cancel
+      </button>
+    </div>
+  </Modal>
+  <!-- Attribute edit modal -->
+  <Modal
+    :open="showAttributeEditModal"
+    title="Edit attribute"
+    description="Are you sure you want to delete this attribute?"
+  >
+    <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+      <button
+        @click="editAttribute(index - 1)"
+        type="button"
+        class="inline-flex w-full justify-center rounded-md border border-transparent bg-tileset-red px-4 py-2 text-base font-medium text-tileset-full-white shadow-sm hover:bg-tileset-red-1 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
+      >
+        Delete
+      </button>
+      <button
+        @click="showAttributeEditModal = false"
+        type="button"
+        class="mt-3 inline-flex w-full justify-center rounded-md border border-tileset-grey-5 px-4 py-2 text-base font-medium shadow-sm hover:bg-gray-50 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+      >
+        Cancel
+      </button>
+    </div>
+  </Modal>
 </template>
 
 <!-- <div class="block text-sm font-medium mt-3">

@@ -18,7 +18,7 @@ function changeModalDisplay(display) {
   showModal.value = display;
 }
 
-function deleteModal() {
+function deleteForm() {
   showModal.value = false;
 }
 </script>
@@ -202,7 +202,7 @@ function deleteModal() {
   >
     <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
       <button
-        @click="deleteModal"
+        @click="deleteForm"
         type="button"
         class="inline-flex w-full justify-center rounded-md border border-transparent bg-tileset-red px-4 py-2 text-base font-medium text-tileset-full-white shadow-sm hover:bg-tileset-red-1 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
       >

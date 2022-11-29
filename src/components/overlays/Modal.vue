@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps(["open", 'title', 'description']);
+const props = defineProps(["open", "title", "description"]);
 </script>
 
 <template>
@@ -10,9 +10,7 @@ const props = defineProps(["open", 'title', 'description']);
     role="dialog"
     aria-modal="true"
   >
-    <div
-      class="fixed inset-0 bg-tileset-grey-5 bg-opacity-75 "
-    ></div>
+    <div class="fixed inset-0 bg-tileset-grey-5 bg-opacity-75"></div>
 
     <div class="fixed inset-0 z-10 overflow-y-auto">
       <div
@@ -27,7 +25,7 @@ const props = defineProps(["open", 'title', 'description']);
                 class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-tileset-red sm:mx-0 sm:h-10 sm:w-10"
               >
                 <svg
-                  class="h-6 w-6 text-red-600"
+                  class="h-6 w-6"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -47,11 +45,11 @@ const props = defineProps(["open", 'title', 'description']);
                   class="text-lg font-medium leading-6 text-gray-900"
                   id="modal-title"
                 >
-                {{props.title}}
+                  {{ props.title }}
                 </h3>
                 <div class="mt-2">
                   <p class="text-sm text-gray-500">
-                    {{props.description}}
+                    {{ props.description }}
                   </p>
                 </div>
               </div>

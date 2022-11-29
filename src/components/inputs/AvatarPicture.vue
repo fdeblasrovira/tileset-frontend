@@ -23,7 +23,7 @@ function previewFiles(event) {
     <div class="my-3 flex items-center flex-col space-y-6">
       <span
         :style="{ backgroundImage: 'url(' + image + ')' }"
-        class="flex h-24 min-w-[3rem] w-24 overflow-hidden rounded-full bg-tileset-grey-2 bg-contain"
+        class="flex h-24 min-w-[3rem] w-24 overflow-hidden rounded-full bg-tileset-grey-2 bg-contain bg-no-repeat bg-center"
       >
         <svg
           v-if="image.length <= 0"

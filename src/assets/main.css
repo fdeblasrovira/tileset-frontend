@@ -1259,22 +1259,6 @@ select{
   width: 6rem;
 }
 
-.w-\[80\%-128px\]{
-  width: 80%-128px;
-}
-
-.w-\[80\%\]{
-  width: 80%;
-}
-
-.w-\[calc\(100\%-6rem\)\]{
-  width: calc(100% - 6rem);
-}
-
-.w-\[calc\(100\%-8rem\)\]{
-  width: calc(100% - 8rem);
-}
-
 .min-w-full{
   min-width: 100%;
 }
@@ -1355,6 +1339,16 @@ select{
 
 .origin-top-right{
   transform-origin: top right;
+}
+
+.translate-x-1\/2{
+  --tw-translate-x: 50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.translate-x-1{
+  --tw-translate-x: 0.25rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .rotate-90{
@@ -1801,6 +1795,14 @@ select{
   background-size: contain;
 }
 
+.bg-center{
+  background-position: center;
+}
+
+.bg-no-repeat{
+  background-repeat: no-repeat;
+}
+
 .stroke-tileset-white{
   stroke: #f4f3ee;
 }
@@ -2236,14 +2238,19 @@ select{
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.hover\:bg-tileset-dark-blue:hover{
+.hover\:bg-tileset-red-1:hover{
   --tw-bg-opacity: 1;
-  background-color: rgb(29 53 87 / var(--tw-bg-opacity));
+  background-color: rgb(184 46 56 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-tileset-green-1:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(57 125 94 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-tileset-blue-1:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(50 88 113 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-tileset-light-blue:hover{
@@ -2261,19 +2268,14 @@ select{
   background-color: rgb(108 117 125 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-tileset-dark-blue:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(29 53 87 / var(--tw-bg-opacity));
+}
+
 .hover\:bg-tileset-yellow-1:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(186 157 85 / var(--tw-bg-opacity));
-}
-
-.hover\:bg-tileset-red-1:hover{
-  --tw-bg-opacity: 1;
-  background-color: rgb(184 46 56 / var(--tw-bg-opacity));
-}
-
-.hover\:bg-tileset-blue-1:hover{
-  --tw-bg-opacity: 1;
-  background-color: rgb(50 88 113 / var(--tw-bg-opacity));
 }
 
 .hover\:text-tileset-blue:hover{
