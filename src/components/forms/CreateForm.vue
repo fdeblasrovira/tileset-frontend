@@ -11,6 +11,8 @@ import Modal from "../overlays/Modal.vue";
 import FullButton from "../buttons/FullButton.vue";
 import ColorPicker from "../vendor/ColorPicker.vue";
 import { useCreateTabulation } from "@/stores/createTabulation";
+import DefaultValues from "../../config/defaultValues";
+import { v4 as uuidv4 } from "uuid";
 
 const tabData = useCreateTabulation();
 const formData = reactive({
@@ -21,16 +23,35 @@ const formData = reactive({
 });
 
 function addAttribute() {
-  const defaultAttribute = {
-    min: "-5",
-    max: "5",
-    defaultValue: "0",
-    leftColor: "#1d3557",
-    leftLabel: "Boring",
-    rightColor: "#f4f3ee",
-    rightLabel: "Amazing",
-  };
+  const defaultAttribute = DefaultValues.defaultAttribute;
+
+  //Generate a unique ID for this specific attribute
+  defaultAttribute.id = uuidv4();
+
+  console.log(defaultAttribute);
   formData.attributes.push(defaultAttribute);
+}
+
+function addQuestion(type) {
+  let question;
+
+  switch (type) {
+    case "radio":
+      question = DefaultValues.defaultRadioQuestion;
+      break;
+    case "checkbox":
+      question = DefaultValues.defaultCheckboxQuestion;
+      break;
+    case "select":
+      question = DefaultValues.defaultSelectQuestion;
+      break;
+  }
+
+  //Generate a unique ID for this specific question
+  question.id = uuidv4();
+
+  formData.questions.push(question);
+  console.log(formData.questions);
 }
 function saveContents() {}
 
@@ -60,9 +81,11 @@ function deleteAttribute() {
 }
 
 function editAttribute() {
-  editingAttribute.value.min = Number(editingAttribute.value.min)
-  editingAttribute.value.max = Number(editingAttribute.value.max)
-  editingAttribute.value.defaultValue = Number(editingAttribute.value.defaultValue)
+  editingAttribute.value.min = Number(editingAttribute.value.min);
+  editingAttribute.value.max = Number(editingAttribute.value.max);
+  editingAttribute.value.defaultValue = Number(
+    editingAttribute.value.defaultValue
+  );
   // Check if min is smaller than max
   // If not, display error message
   if (editingAttribute.value.min > editingAttribute.value.max) {
@@ -129,7 +152,7 @@ function editAttribute() {
       <!-- Attribute edit tab contents -->
       <div
         v-if="tabData.currentTab == 2"
-        class="border rounded-md border-tileset-grey-2 space-y-6 px-4 py-5 sm:p-6"
+        class="border rounded-md border-tileset-grey-2 space-y-3 px-4 py-5 sm:p-6"
       >
         <label class="w-full text-left font-medium">Attributes</label>
         <div
@@ -140,7 +163,7 @@ function editAttribute() {
         </div>
         <template v-for="(attribute, index) in formData.attributes">
           <div
-            class="border rounded-md border-tileset-grey-2 space-y-6 px-4 py-5 sm:p-6"
+            class="border rounded-md border-tileset-grey-2 space-y-3 px-4 py-5 sm:p-6"
           >
             <Range
               :min="attribute.min"
@@ -178,8 +201,8 @@ function editAttribute() {
               <FullButton
                 @click="displayAttributeEditModal(true, index)"
                 text="Edit"
-                color="bg-tileset-green"
-                hover="hover:bg-tileset-green-1"
+                color="bg-tileset-blue"
+                hover="hover:bg-tileset-blue-1"
                 class="mx-4"
               >
                 <svg
@@ -203,6 +226,106 @@ function editAttribute() {
 
         <FullButton
           @click="addAttribute"
+          text="Add"
+          color="bg-tileset-blue"
+          hover="hover:bg-tileset-blue-1"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="3.5"
+            stroke="currentColor"
+            class="w-6 h-6 stroke-tileset-white"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 6v12m6-6H6"
+            />
+          </svg>
+        </FullButton>
+      </div>
+      <!-- Question edit tab contents -->
+      <div
+        v-if="tabData.currentTab == 3"
+        class="border rounded-md border-tileset-grey-2 space-y-3 px-4 py-5 sm:p-6"
+      >
+        <label class="w-full text-left font-medium">Questions</label>
+        <div
+          v-if="formData.questions.length <= 0"
+          class="w-full h-10 text-center items-center m-auto font-light italic"
+        >
+          There are no questions yet
+        </div>
+        <template v-for="(question, index) in formData.questions">
+          <div
+            class="border rounded-md border-tileset-grey-2 space-y-6 px-4 py-5 sm:p-6"
+          >
+            <template v-if="question.type == 'radio'">
+              <div class="block text-sm font-medium mt-3">
+                <label class="block text-base font-medium">{{
+                  question.question
+                }}</label>
+                <Radio
+                  v-for="(option, optionsIndex) in formData.questions[index].options"
+                  :label="option.text"
+                  :name="`radio_${index}`"
+                  :id="`radio_${index}_${optionsIndex}`"
+                />
+              </div>
+            </template>
+            <div class="flex justify-between">
+              <FullButton
+                @click="displayQuestionDeleteModal(true, index)"
+                text="Delete"
+                color="bg-tileset-red"
+                hover="hover:bg-tileset-red-1"
+                class="mx-4"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="2"
+                  stroke="currentColor"
+                  class="w-6 h-6 stroke-tileset-white"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                  />
+                </svg>
+              </FullButton>
+              <FullButton
+                @click="displayQuestionEditModal(true, index)"
+                text="Edit"
+                color="bg-tileset-blue"
+                hover="hover:bg-tileset-blue-1"
+                class="mx-4"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="2"
+                  stroke="currentColor"
+                  class="w-6 h-6 stroke-tileset-white"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                  />
+                </svg>
+              </FullButton>
+            </div>
+          </div>
+        </template>
+
+        <FullButton
+          @click="addQuestion('radio')"
           text="Add"
           color="bg-tileset-blue"
           hover="hover:bg-tileset-blue-1"
