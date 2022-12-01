@@ -39,25 +39,51 @@ const showAttributeEditModal = ref(false);
 
 const selectedAttribute = ref(null);
 const editingAttribute = ref(null);
+const attributeModalErrorMessage = ref("");
 
-function displayAttributeDeleteModal(display) {
+function displayAttributeDeleteModal(display, index) {
   showAttributeDeleteModal.value = display;
+  selectedAttribute.value = index;
 }
 
 function displayAttributeEditModal(display, index) {
+  attributeModalErrorMessage.value = "";
   selectedAttribute.value = index;
   editingAttribute.value = { ...formData.attributes[index] };
   showAttributeEditModal.value = display;
 }
 
-function deleteAttribute(index) {
+function deleteAttribute() {
   showAttributeDeleteModal.value = false;
   // Remove attribute in the specified index
-  formData.attributes.splice(index, 1);
+  formData.attributes.splice(selectedAttribute.value, 1);
 }
 
 function editAttribute() {
-  console.log(editingAttribute.value)
+  editingAttribute.value.min = Number(editingAttribute.value.min)
+  editingAttribute.value.max = Number(editingAttribute.value.max)
+  editingAttribute.value.defaultValue = Number(editingAttribute.value.defaultValue)
+  // Check if min is smaller than max
+  // If not, display error message
+  if (editingAttribute.value.min > editingAttribute.value.max) {
+    attributeModalErrorMessage.value =
+      "Minimum value should be smaller than maximum value";
+    return;
+  }
+
+  // Perform defaultValue validation
+  // It needs to be between min and max. In case it does not, change it to min and max values accordingly.
+  // If not, display error message
+  if (
+    editingAttribute.value.defaultValue > editingAttribute.value.max ||
+    editingAttribute.value.defaultValue < editingAttribute.value.min
+  ) {
+    attributeModalErrorMessage.value =
+      "Default value should be between minimum and maximum values";
+    return;
+  }
+
+  // Commit changes
   showAttributeEditModal.value = false;
   formData.attributes[selectedAttribute.value] = editingAttribute.value;
 }
@@ -128,7 +154,7 @@ function editAttribute() {
             </Range>
             <div class="flex justify-between">
               <FullButton
-                @click="displayAttributeDeleteModal(true)"
+                @click="displayAttributeDeleteModal(true, index)"
                 text="Delete"
                 color="bg-tileset-red"
                 hover="hover:bg-tileset-red-1"
@@ -245,9 +271,9 @@ function editAttribute() {
       </svg>
     </template>
     <template #buttons>
-      <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+      <div class="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
         <button
-          @click="deleteAttribute(index)"
+          @click="deleteAttribute()"
           type="button"
           class="inline-flex w-full justify-center rounded-md border border-transparent bg-tileset-red px-4 py-2 text-base font-medium text-tileset-full-white shadow-sm hover:bg-tileset-red-1 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
         >
@@ -286,8 +312,10 @@ function editAttribute() {
         />
       </svg>
     </template>
+
     <template #contents>
-      <div>
+      <span class="flex my-2 p-[1px] bg-tileset-grey-2"></span>
+      <div class="space-y-3 mt-3">
         <div class="flex">
           <Input
             v-model="editingAttribute.leftLabel"
@@ -325,13 +353,13 @@ function editAttribute() {
             v-model="editingAttribute.leftColor"
             label="Left Color"
             class="w-full h-10 mr-2"
-            :pure-color="editingAttribute.leftColor"
+            :display-color="editingAttribute.leftColor"
           />
           <ColorPicker
             v-model="editingAttribute.rightColor"
             label="Right Color"
             class="w-full h-10 ml-2"
-            :pure-color="editingAttribute.rightColor"
+            :display-color="editingAttribute.rightColor"
           />
         </div>
         <Input
@@ -343,7 +371,13 @@ function editAttribute() {
       </div>
     </template>
     <template #buttons>
-      <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+      <p
+        v-if="attributeModalErrorMessage.length > 0"
+        class="font-light text-tileset-red text-right text-sm italic px-4 sm:px-6"
+      >
+        {{ attributeModalErrorMessage }}
+      </p>
+      <div class="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
         <button
           @click="editAttribute(index)"
           type="button"

@@ -32,7 +32,7 @@ const background = computed(
     >
       <div></div>
 
-      <div v-for="n in (Math.abs(props.min) + Math.abs(props.max) - 1)" class="range-space"></div>
+      <div v-for="n in (props.max - props.min - 1)" class="range-space"></div>
       <div></div>
     </div>
     <input
