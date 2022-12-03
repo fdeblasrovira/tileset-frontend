@@ -60,13 +60,13 @@ function addQuestion(type) {
 
   switch (type) {
     case "radio":
-      question = DefaultValues.defaultRadioQuestion;
+      question = DefaultValues.defaultRadioQuestion();
       break;
     case "checkbox":
-      question = DefaultValues.defaultCheckboxQuestion;
+      question = DefaultValues.defaultCheckboxQuestion();
       break;
     case "select":
-      question = DefaultValues.defaultSelectQuestion;
+      question = DefaultValues.defaultSelectQuestion();
       break;
   }
 
