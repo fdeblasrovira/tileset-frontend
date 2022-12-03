@@ -1088,6 +1088,10 @@ select{
   margin-bottom: 1.75rem;
 }
 
+.mt-7{
+  margin-top: 1.75rem;
+}
+
 .mt-\[2rem\]{
   margin-top: 2rem;
 }
@@ -1098,10 +1102,6 @@ select{
 
 .mt-\[-22px\]{
   margin-top: -22px;
-}
-
-.mt-7{
-  margin-top: 1.75rem;
 }
 
 .block{
@@ -1200,16 +1200,16 @@ select{
   height: 6rem;
 }
 
+.h-11{
+  height: 2.75rem;
+}
+
 .h-\[100\%\]{
   height: 100%;
 }
 
 .h-\[40px\]{
   height: 40px;
-}
-
-.h-11{
-  height: 2.75rem;
 }
 
 .max-h-fit{
@@ -1298,10 +1298,6 @@ select{
 
 .w-1{
   width: 0.25rem;
-}
-
-.w-1\/2{
-  width: 50%;
 }
 
 .w-1\/3{
