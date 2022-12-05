@@ -1,12 +1,41 @@
-const defaultAttribute = {
-  min: "-5",
-  max: "5",
-  defaultValue: "0",
-  leftColor: "#1d3557",
-  leftLabel: "Boring",
-  rightColor: "#f4f3ee",
-  rightLabel: "Amazing",
-};
+const attributeList = [
+  {
+    min: "-5",
+    max: "5",
+    defaultValue: "0",
+    leftColor: "#a8dadc",
+    leftLabel: "Boring",
+    rightColor: "#e9c46a",
+    rightLabel: "Amazing",
+  },
+  {
+    min: "-5",
+    max: "5",
+    defaultValue: "0",
+    leftColor: "#457b9d",
+    leftLabel: "Hate",
+    rightColor: "#e63946",
+    rightLabel: "Love",
+  },
+  {
+    min: "-5",
+    max: "5",
+    defaultValue: "0",
+    leftColor: "#a8dadc",
+    leftLabel: "Cute",
+    rightColor: "#49a078",
+    rightLabel: "Beautiful",
+  },
+  {
+    min: "-5",
+    max: "5",
+    defaultValue: "0",
+    leftColor: "#a98467",
+    leftLabel: "Poor",
+    rightColor: "#be95c4",
+    rightLabel: "Rich",
+  },
+];
 
 const inputQuestionList = [
   {
@@ -33,12 +62,12 @@ const textareaQuestionList = [
     question: "Comments",
   },
   {
-    type: "Traveling plan",
-    question: "What's your dog's name?",
+    type: "textarea",
+    question: "Grocery list",
   },
   {
-    type: "Grocery list",
-    question: "What's your dog's name?",
+    type: "textarea",
+    question: "Traveling plan",
   },
 ];
 
@@ -46,17 +75,17 @@ const dateQuestionList = [
   {
     type: "date",
     question: "When were you born?",
-    format: "date"
+    format: "date",
   },
   {
     type: "date",
     question: "When did you finish school?",
-    format: "date"
+    format: "date",
   },
   {
     type: "date",
     question: "When was your last meal?",
-    format: "datetime-local"
+    format: "datetime-local",
   },
 ];
 
@@ -98,7 +127,7 @@ const radioQuestionList = [
     options: [
       { text: "Everything", actions: [] },
       { text: "Very important", actions: [] },
-      { text: "Something I look for", actions: [] },
+      { text: "Something I'm looking for", actions: [] },
       { text: "Overrated", actions: [] },
       { text: "Unknown to me", actions: [] },
     ],
@@ -185,6 +214,10 @@ const selectQuestionList = [
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
+
+const defaultAttribute = function () {
+  return attributeList[getRandomInt(attributeList.length)];
+};
 
 const defaultInputQuestion = function () {
   return inputQuestionList[getRandomInt(inputQuestionList.length)];

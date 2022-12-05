@@ -6,6 +6,7 @@ import Date from "../../inputs/Date.vue";
 import Radio from "../../inputs/Radio.vue";
 import Checkbox from "../../inputs/Checkbox.vue";
 import Select from "../../inputs/Select.vue";
+import QuestionOption from "../../forms/edit/QuestionOption.vue";
 import FullButton from "../../buttons/FullButton.vue";
 import DefaultValues from "../../../config/defaultValues";
 import Modal from "../../overlays/Modal.vue";
@@ -19,22 +20,26 @@ const questions = ref(props.questions);
 // After any change to the questions, we tell the parent component to update the value
 watch(questions, (newQuestions) => {
   emit(onQuestionChange(newQuestions));
-})
+});
 
 // Toggle for the delete modal
 const showQuestionDeleteModal = ref(false);
 
-// Toggle for the edit modal
+// Toggle for the edit modals
 const showQuestionEditModal = ref(false);
 
 // Validation message that will display in the edit modal.
-const QuestionModalErrorMessage = ref("");
+const questionModalErrorMessage = ref("");
 
 // What type of question will be added when the add button is pressed
 const addQuestionSelectValue = ref("input");
 
 // It keeps a reference to the selected item by the user
 const selectedQuestion = ref(null);
+
+// It keeps a reference to the opened options in the question edit modal
+const openedOption = ref(-1);
+const lastOpenedOption = ref(-1);
 
 /* 
     It stores the data of the edit modal.
@@ -49,6 +54,35 @@ function displayQuestionDeleteModal(display, index) {
   selectedQuestion.value = index;
 }
 
+// Toggle edit modal
+function displayQuestionEditModal(display, index) {
+  // Resets the error message to an empty value
+  questionModalErrorMessage.value = "";
+  selectedQuestion.value = index;
+
+  // Initializes the editor data with the current saved data
+  editingQuestion.value = { ...questions.value[index] };
+
+  showQuestionEditModal.value = true;
+}
+
+function editQuestion() {
+  // Check if the label has text.
+  // If not, display error message
+  if (editingQuestion.value.question.trim().length <= 0) {
+    questionModalErrorMessage.value = "The label text can't be blank";
+    return;
+  }
+
+  switch (editingQuestion.value.type) {
+    case "input":
+      break;
+  }
+
+  // Commit changes
+  showQuestionEditModal.value = false;
+  questions.value[selectedQuestion.value] = editingQuestion.value;
+}
 
 function deleteQuestion() {
   showQuestionDeleteModal.value = false;
@@ -88,6 +122,18 @@ function addQuestion(type) {
   questions.value.push({ ...question });
 }
 
+// The user clicked an option from the question edit modal
+function onListOptionClicked(index) {
+  
+  lastOpenedOption.value =
+    openedOption.value == lastOpenedOption.value ? -1 : openedOption.value;
+  openedOption.value = index;
+  console.log("openedOption.value")
+  console.log(openedOption.value)
+  console.log("lastOpenedOption.value")
+  console.log(lastOpenedOption.value)
+}
+
 </script>
 
 <template>
@@ -101,31 +147,18 @@ function addQuestion(type) {
     >
       There are no questions yet
     </div>
-    <template
-      v-for="(question, index) in questions"
-      :key="question.id"
-    >
+    <template v-for="(question, index) in questions" :key="question.id">
       <div
         class="border rounded-md border-tileset-grey-2 space-y-6 px-4 py-5 sm:p-6"
       >
         <template v-if="question.type == 'input'">
-          <Input
-            :label="question.question"
-            :name="question.id"
-            type="text"
-          />
+          <Input :label="question.question" :name="question.id" type="text" />
         </template>
         <template v-if="question.type == 'textarea'">
-          <Textarea
-            :label="question.question"
-            :name="question.id"
-          />
+          <Textarea :label="question.question" :name="question.id" />
         </template>
         <template v-if="question.type == 'date'">
-          <Date
-            :label="question.question"
-            :format="question.format"
-          />
+          <Date :label="question.question" :format="question.format" />
         </template>
         <template v-if="question.type == 'radio'">
           <div class="block text-sm font-medium mt-3">
@@ -147,7 +180,7 @@ function addQuestion(type) {
               question.question
             }}</label>
             <Checkbox
-              v-for="(option, optionsIndex) in question.options" 
+              v-for="(option, optionsIndex) in question.options"
               :label="option.text"
               :name="`radio_${question.id}`"
               :id="`radio_${question.id}_${optionsIndex}`"
@@ -288,6 +321,88 @@ function addQuestion(type) {
           @click="showQuestionDeleteModal = false"
           type="button"
           class="mt-3 inline-flex w-full justify-center rounded-md border border-tileset-grey-5 px-4 py-2 text-base font-medium shadow-sm hover:bg-gray-50 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+        >
+          Cancel
+        </button>
+      </div>
+    </template>
+  </Modal>
+  <!-- Input question edit modal -->
+  <Modal
+    :open="showQuestionEditModal"
+    title="Edit question"
+    description="Edit the question's parameters"
+    svgBackgroundColor="bg-tileset-blue"
+  >
+    <template #svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-6 h-6 stroke-tileset-white"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+        />
+      </svg>
+    </template>
+
+    <template #contents>
+      <span class="flex my-2 p-[1px] bg-tileset-grey-2"></span>
+      <div class="space-y-3 mt-3">
+        <template
+          v-if="
+            editingQuestion.type == 'input' ||
+            editingQuestion.type == 'textarea'
+          "
+        >
+          <Input v-model="editingQuestion.question" label="Label" type="text" />
+        </template>
+        <template v-if="editingQuestion.type == 'date'">
+          <Input v-model="editingQuestion.question" label="Label" type="text" />
+          <Select label="Format" v-model="editingQuestion.format">
+            <option value="date">Date</option>
+            <option value="datetime-local">Date and time</option>
+          </Select>
+        </template>
+        <template v-if="editingQuestion.type == 'radio'">
+          <Input v-model="editingQuestion.question" label="Label" type="text" />
+          <div class="space-y-1">
+            <label>Options</label>
+            <QuestionOption
+              v-for="(option, index) in editingQuestion.options"
+              @list-option-clicked="onListOptionClicked(index)"
+              :data="option"
+              :open="openedOption == index"
+              :close="lastOpenedOption == index"
+            />
+          </div>
+        </template>
+      </div>
+    </template>
+    <template #buttons>
+      <p
+        v-if="questionModalErrorMessage.length > 0"
+        class="font-light text-tileset-red text-right text-sm italic px-4 sm:px-6"
+      >
+        {{ questionModalErrorMessage }}
+      </p>
+      <div class="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+        <button
+          @click="editQuestion()"
+          type="button"
+          class="inline-flex w-full justify-center rounded-md border border-transparent bg-tileset-green px-4 py-2 text-base font-medium text-tileset-full-white shadow-sm hover:bg-tileset-green-1 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
+        >
+          Save
+        </button>
+        <button
+          @click="showQuestionEditModal = false"
+          type="button"
+          class="mt-3 inline-flex w-full justify-center rounded-md border border-tileset-grey-5 px-4 py-2 text-base font-medium shadow-sm sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
         >
           Cancel
         </button>

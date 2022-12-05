@@ -57,10 +57,11 @@ function displayAttributeEditModal(display, index) {
 
 // Adds an item to the attribute list
 function addAttribute() {
-  let defaultAttribute = DefaultValues.defaultAttribute;
+  let defaultAttribute = DefaultValues.defaultAttribute();
 
   //Generate a unique ID for this specific attribute
   defaultAttribute.id = uuidv4();
+  console.log({...defaultAttribute})
 
   attributes.value.push({ ...defaultAttribute });
 }
@@ -335,7 +336,7 @@ function editAttribute() {
       </p>
       <div class="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
         <button
-          @click="editAttribute(index)"
+          @click="editAttribute()"
           type="button"
           class="inline-flex w-full justify-center rounded-md border border-transparent bg-tileset-green px-4 py-2 text-base font-medium text-tileset-full-white shadow-sm hover:bg-tileset-green-1 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
         >
