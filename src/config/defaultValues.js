@@ -8,6 +8,58 @@ const defaultAttribute = {
   rightLabel: "Amazing",
 };
 
+const inputQuestionList = [
+  {
+    type: "input",
+    question: "Name",
+  },
+  {
+    type: "input",
+    question: "Surname",
+  },
+  {
+    type: "input",
+    question: "What's your dog's name?",
+  },
+];
+
+const textareaQuestionList = [
+  {
+    type: "textarea",
+    question: "Description",
+  },
+  {
+    type: "textarea",
+    question: "Comments",
+  },
+  {
+    type: "Traveling plan",
+    question: "What's your dog's name?",
+  },
+  {
+    type: "Grocery list",
+    question: "What's your dog's name?",
+  },
+];
+
+const dateQuestionList = [
+  {
+    type: "date",
+    question: "When were you born?",
+    format: "date"
+  },
+  {
+    type: "date",
+    question: "When did you finish school?",
+    format: "date"
+  },
+  {
+    type: "date",
+    question: "When was your last meal?",
+    format: "datetime-local"
+  },
+];
+
 const radioQuestionList = [
   {
     type: "radio",
@@ -134,6 +186,18 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
+const defaultInputQuestion = function () {
+  return inputQuestionList[getRandomInt(inputQuestionList.length)];
+};
+
+const defaultTextareaQuestion = function () {
+  return textareaQuestionList[getRandomInt(textareaQuestionList.length)];
+};
+
+const defaultDateQuestion = function () {
+  return dateQuestionList[getRandomInt(dateQuestionList.length)];
+};
+
 const defaultRadioQuestion = function () {
   return radioQuestionList[getRandomInt(radioQuestionList.length)];
 };
@@ -148,6 +212,9 @@ const defaultSelectQuestion = function () {
 
 export default {
   defaultAttribute,
+  defaultInputQuestion,
+  defaultTextareaQuestion,
+  defaultDateQuestion,
   defaultRadioQuestion,
   defaultCheckboxQuestion,
   defaultSelectQuestion,

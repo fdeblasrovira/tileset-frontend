@@ -1,5 +1,8 @@
 <script setup>
 import { watch, ref } from "vue";
+import Input from "../../inputs/Input.vue";
+import Textarea from "../../inputs/Textarea.vue";
+import Date from "../../inputs/Date.vue";
 import Radio from "../../inputs/Radio.vue";
 import Checkbox from "../../inputs/Checkbox.vue";
 import Select from "../../inputs/Select.vue";
@@ -28,7 +31,7 @@ const showQuestionEditModal = ref(false);
 const QuestionModalErrorMessage = ref("");
 
 // What type of question will be added when the add button is pressed
-const addQuestionSelectValue = ref("radio");
+const addQuestionSelectValue = ref("input");
 
 // It keeps a reference to the selected item by the user
 const selectedQuestion = ref(null);
@@ -59,6 +62,15 @@ function addQuestion(type) {
   let question;
 
   switch (type) {
+    case "input":
+      question = DefaultValues.defaultInputQuestion();
+      break;
+    case "textarea":
+      question = DefaultValues.defaultTextareaQuestion();
+      break;
+    case "date":
+      question = DefaultValues.defaultDateQuestion();
+      break;
     case "radio":
       question = DefaultValues.defaultRadioQuestion();
       break;
@@ -96,6 +108,25 @@ function addQuestion(type) {
       <div
         class="border rounded-md border-tileset-grey-2 space-y-6 px-4 py-5 sm:p-6"
       >
+        <template v-if="question.type == 'input'">
+          <Input
+            :label="question.question"
+            :name="question.id"
+            type="text"
+          />
+        </template>
+        <template v-if="question.type == 'textarea'">
+          <Textarea
+            :label="question.question"
+            :name="question.id"
+          />
+        </template>
+        <template v-if="question.type == 'date'">
+          <Date
+            :label="question.question"
+            :format="question.format"
+          />
+        </template>
         <template v-if="question.type == 'radio'">
           <div class="block text-sm font-medium mt-3">
             <label class="block text-base font-medium">{{
@@ -190,6 +221,9 @@ function addQuestion(type) {
     </template>
     <div class="flex">
       <Select label="" class="w-1/3 mr-4 mt-5" v-model="addQuestionSelectValue">
+        <option value="input">Single line text</option>
+        <option value="textarea">Multiple line text</option>
+        <option value="date">Date</option>
         <option value="radio">Single option</option>
         <option value="checkbox">Multiple options</option>
         <option value="select">Dropdown</option>

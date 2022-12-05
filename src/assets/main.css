@@ -1911,12 +1911,12 @@ select{
   padding: 1.5rem;
 }
 
-.p-\[1px\]{
-  padding: 1px;
-}
-
 .p-2\.5{
   padding: 0.625rem;
+}
+
+.p-\[1px\]{
+  padding: 1px;
 }
 
 .px-2{
@@ -2302,16 +2302,6 @@ select{
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.hover\:bg-tileset-red-1:hover{
-  --tw-bg-opacity: 1;
-  background-color: rgb(184 46 56 / var(--tw-bg-opacity));
-}
-
-.hover\:bg-tileset-blue-1:hover{
-  --tw-bg-opacity: 1;
-  background-color: rgb(50 88 113 / var(--tw-bg-opacity));
-}
-
 .hover\:bg-tileset-green-1:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(57 125 94 / var(--tw-bg-opacity));
@@ -2340,6 +2330,16 @@ select{
 .hover\:bg-tileset-yellow-1:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(186 157 85 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-tileset-red-1:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(184 46 56 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-tileset-blue-1:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(50 88 113 / var(--tw-bg-opacity));
 }
 
 .hover\:text-tileset-blue:hover{
@@ -2449,22 +2449,22 @@ select{
     border-radius: 0.375rem;
   }
 
-  .sm\:p-6{
-    padding: 1.5rem;
-  }
-
   .sm\:p-0{
     padding: 0px;
   }
 
-  .sm\:px-6{
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+  .sm\:p-6{
+    padding: 1.5rem;
   }
 
   .sm\:px-4{
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+
+  .sm\:px-6{
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 
   .sm\:pb-4{
