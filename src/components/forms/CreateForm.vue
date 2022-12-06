@@ -45,6 +45,7 @@ function saveContents() {}
       <!-- Question edit tab contents -->
       <Questions
         :questions="formData.questions"
+        :attributes="formData.attributes"
         v-if="tabData.currentTab == 3"
         @on-question-change="updateQuestions"
         />

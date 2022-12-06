@@ -13,9 +13,9 @@ function onTabClick(tabNumber) {
 </script>
 
 <template>
-  <div class="w-full mx-auto mt-[2rem] flex-col max-w-[80%] xl:max-w-[1024px]">
+  <div class="w-full mx-auto mt-[2rem] flex-col sm:max-w-[80%] xl:max-w-[1024px]">
     <ul
-      class="flex mx-[2.25rem] grow text-sm font-medium text-center text-tileset-grey-6"
+      class="flex mx-[0.75rem] sm:mx-[2.25rem] grow text-sm font-medium text-center text-tileset-grey-6"
     >
       <Tab @click="onTabClick(1)" :active="tabData.currentTab == 1">
         <svg
@@ -86,7 +86,7 @@ function onTabClick(tabNumber) {
 
   <div class="flex justify-center grow">
     <div
-      class="relative mb-[2rem] flex grow max-w-[80%] xl:max-w-[1024px] 2xl:max-w-[1024px] h-[100%] bg-tileset-full-white shadow-2xl p-6 rounded-lg"
+      class="relative mb-[2rem] flex grow sm:max-w-[80%] xl:max-w-[1024px] 2xl:max-w-[1024px] h-[100%] bg-tileset-full-white shadow-2xl p-6 sm:rounded-lg"
     >
       <CreateForm />
     </div>

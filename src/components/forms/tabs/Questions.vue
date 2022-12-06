@@ -1,5 +1,5 @@
 <script setup>
-import { watch, ref, isProxy, toRaw} from "vue";
+import { watch, ref, isProxy, toRaw } from "vue";
 import Input from "../../inputs/Input.vue";
 import Textarea from "../../inputs/Textarea.vue";
 import Date from "../../inputs/Date.vue";
@@ -12,10 +12,11 @@ import DefaultValues from "../../../config/defaultValues";
 import Modal from "../../overlays/Modal.vue";
 import { v4 as uuidv4 } from "uuid";
 
-const props = defineProps(["questions"]);
+const props = defineProps(["questions", "attributes"]);
 const emits = defineEmits(["onQuestionChange"]);
 
 const questions = ref(props.questions);
+const attributes = ref(props.attributes);
 
 // After any change to the questions, we tell the parent component to update the value
 watch(questions, (newQuestions) => {
@@ -63,9 +64,9 @@ function displayQuestionEditModal(display, index) {
 
   // Initializes the editor data with the current saved data
   editingQuestion.value = { ...questions.value[index] };
-  editingOptions.value = { ... editingQuestion.value.options};
+  editingOptions.value = { ...editingQuestion.value.options };
 
-  let rawObject = JSON.parse(JSON.stringify(editingOptions.value))
+  let rawObject = JSON.parse(JSON.stringify(editingOptions.value));
   let optionsArray = [];
   for (const property in rawObject) {
     optionsArray.push(rawObject[property]);
@@ -85,7 +86,7 @@ function editQuestion() {
 
   // Commit changes
   showQuestionEditModal.value = false;
-  editingQuestion.value.options = [...editingOptions.value]
+  editingQuestion.value.options = [...editingOptions.value];
   questions.value[selectedQuestion.value] = { ...editingQuestion.value };
 }
 
@@ -392,6 +393,7 @@ function deleteOption(index) {
               v-for="(option, index) in editingOptions"
               @list-option-clicked="onListOptionClicked(index)"
               @delete-option="deleteOption(index)"
+              :attributes="attributes"
               :data="{ ...option }"
               :open="openedOption == index"
               :close="lastOpenedOption == index"
