@@ -216,31 +216,31 @@ function getRandomInt(max) {
 }
 
 const defaultAttribute = function () {
-  return attributeList[getRandomInt(attributeList.length)];
+  return {...attributeList[getRandomInt(attributeList.length)]};
 };
 
 const defaultInputQuestion = function () {
-  return inputQuestionList[getRandomInt(inputQuestionList.length)];
+  return {...inputQuestionList[getRandomInt(inputQuestionList.length)]};
 };
 
 const defaultTextareaQuestion = function () {
-  return textareaQuestionList[getRandomInt(textareaQuestionList.length)];
+  return {...textareaQuestionList[getRandomInt(textareaQuestionList.length)]};
 };
 
 const defaultDateQuestion = function () {
-  return dateQuestionList[getRandomInt(dateQuestionList.length)];
+  return {...dateQuestionList[getRandomInt(dateQuestionList.length)]};
 };
 
 const defaultRadioQuestion = function () {
-  return radioQuestionList[getRandomInt(radioQuestionList.length)];
+  return {...radioQuestionList[getRandomInt(radioQuestionList.length)]};
 };
 
 const defaultCheckboxQuestion = function () {
-  return checkboxQuestionList[getRandomInt(checkboxQuestionList.length)];
+  return {...checkboxQuestionList[getRandomInt(checkboxQuestionList.length)]};
 };
 
 const defaultSelectQuestion = function () {
-  return selectQuestionList[getRandomInt(selectQuestionList.length)];
+  return {...selectQuestionList[getRandomInt(selectQuestionList.length)]};
 };
 
 export default {

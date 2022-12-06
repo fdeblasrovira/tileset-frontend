@@ -1204,20 +1204,20 @@ select{
   height: 2.75rem;
 }
 
-.h-\[100\%\]{
-  height: 100%;
-}
-
-.h-\[40px\]{
-  height: 40px;
-}
-
 .h-3{
   height: 0.75rem;
 }
 
 .h-2{
   height: 0.5rem;
+}
+
+.h-\[100\%\]{
+  height: 100%;
+}
+
+.h-\[40px\]{
+  height: 40px;
 }
 
 .max-h-fit{
@@ -1308,10 +1308,6 @@ select{
   width: 0.25rem;
 }
 
-.w-1\/3{
-  width: 33.333333%;
-}
-
 .w-3{
   width: 0.75rem;
 }
@@ -1320,8 +1316,8 @@ select{
   width: 0.5rem;
 }
 
-.w-1\/5{
-  width: 20%;
+.w-1\/3{
+  width: 33.333333%;
 }
 
 .min-w-full{

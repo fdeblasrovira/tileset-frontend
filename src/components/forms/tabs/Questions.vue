@@ -1,5 +1,5 @@
 <script setup>
-import { watch, ref } from "vue";
+import { watch, ref, isProxy, toRaw} from "vue";
 import Input from "../../inputs/Input.vue";
 import Textarea from "../../inputs/Textarea.vue";
 import Date from "../../inputs/Date.vue";
@@ -46,7 +46,8 @@ const lastOpenedOption = ref(-1);
     Once the user presses 'Save', this data will overwrite the selected item data.
     If the user presses 'Cancel', this data will be discarded.
 */
-const editingQuestion = ref(null);
+let editingQuestion = ref(null);
+let editingOptions = ref(null);
 
 // Toggle delete modal
 function displayQuestionDeleteModal(display, index) {
@@ -62,6 +63,14 @@ function displayQuestionEditModal(display, index) {
 
   // Initializes the editor data with the current saved data
   editingQuestion.value = { ...questions.value[index] };
+  editingOptions.value = { ... editingQuestion.value.options};
+
+  let rawObject = JSON.parse(JSON.stringify(editingOptions.value))
+  let optionsArray = [];
+  for (const property in rawObject) {
+    optionsArray.push(rawObject[property]);
+  }
+  editingOptions.value = optionsArray;
 
   showQuestionEditModal.value = true;
 }
@@ -74,14 +83,10 @@ function editQuestion() {
     return;
   }
 
-  switch (editingQuestion.value.type) {
-    case "input":
-      break;
-  }
-
   // Commit changes
   showQuestionEditModal.value = false;
-  questions.value[selectedQuestion.value] = editingQuestion.value;
+  editingQuestion.value.options = [...editingOptions.value]
+  questions.value[selectedQuestion.value] = { ...editingQuestion.value };
 }
 
 function deleteQuestion() {
@@ -120,20 +125,24 @@ function addQuestion(type) {
   question.id = uuidv4();
 
   questions.value.push({ ...question });
+  console.log(questions.value);
 }
 
 // The user clicked an option from the question edit modal
 function onListOptionClicked(index) {
-  
   lastOpenedOption.value =
     openedOption.value == lastOpenedOption.value ? -1 : openedOption.value;
   openedOption.value = index;
-  console.log("openedOption.value")
-  console.log(openedOption.value)
-  console.log("lastOpenedOption.value")
-  console.log(lastOpenedOption.value)
 }
 
+// Deletes one of the options of a question
+function deleteOption(index) {
+  editingOptions.value.splice(index, 1);
+
+  // reset accordion values
+  openedOption.value = -1;
+  lastOpenedOption.value = -1;
+}
 </script>
 
 <template>
@@ -369,14 +378,21 @@ function onListOptionClicked(index) {
             <option value="datetime-local">Date and time</option>
           </Select>
         </template>
-        <template v-if="editingQuestion.type == 'radio'">
+        <template
+          v-if="
+            editingQuestion.type == 'radio' ||
+            editingQuestion.type == 'checkbox' ||
+            editingQuestion.type == 'select'
+          "
+        >
           <Input v-model="editingQuestion.question" label="Label" type="text" />
           <div class="space-y-1">
             <label>Options</label>
             <QuestionOption
-              v-for="(option, index) in editingQuestion.options"
+              v-for="(option, index) in editingOptions"
               @list-option-clicked="onListOptionClicked(index)"
-              :data="option"
+              @delete-option="deleteOption(index)"
+              :data="{ ...option }"
               :open="openedOption == index"
               :close="lastOpenedOption == index"
             />

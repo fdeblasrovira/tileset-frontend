@@ -1,12 +1,14 @@
 <script setup>
 const props = defineProps(["data", "open", "close"]);
-const emit = defineEmits(["listOptionClicked"]);
+const emit = defineEmits(["listOptionClicked", "deleteOption"]);
 
 function openListItem() {
-  emit("listOptionClicked", props.data.formId);
+  emit("listOptionClicked");
 }
 
-function deleteOption() {}
+function deleteOption() {
+  emit("deleteOption");
+}
 </script>
 
 <template>
@@ -36,7 +38,7 @@ function deleteOption() {}
           </button>
           <div class="text-left w-full">{{ props.data.text }}</div>
           <button
-            type="submit"
+            @click="deleteOption"
             class="bg-tileset-red p-1 ml-2 text-sm font-medium text-white rounded hover:bg-tileset-red-1"
           >
             <svg
@@ -53,7 +55,6 @@ function deleteOption() {}
                 d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
               />
             </svg>
-            <span class="sr-only">Search</span>
           </button>
         </div>
       </li>
@@ -71,7 +72,6 @@ function deleteOption() {}
     >
       <div class="flex grow-0">
         <button
-          type="submit"
           class="bg-tileset-red p-1 text-sm font-medium text-white rounded hover:bg-tileset-red-1"
         >
           <svg
@@ -88,7 +88,6 @@ function deleteOption() {}
               d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
             />
           </svg>
-          <span class="sr-only">Search</span>
         </button>
       </div>
       <div class="flex grow mx-2 justify-between">
@@ -98,7 +97,6 @@ function deleteOption() {}
       </div>
       <div class="flex grow-0">
         <button
-          type="submit"
           class="bg-tileset-red p-1 text-sm font-medium text-white rounded hover:bg-tileset-red-1"
         >
           <svg
@@ -115,7 +113,6 @@ function deleteOption() {}
               d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
             />
           </svg>
-          <span class="sr-only">Search</span>
         </button>
       </div>
     </div>

@@ -103,7 +103,7 @@ function editAttribute() {
 
   // Commit changes
   showAttributeEditModal.value = false;
-  attributes.value[selectedAttribute] = editingAttribute.value;
+  attributes.value[selectedAttribute] = {...editingAttribute.value};
 }
 </script>
 
