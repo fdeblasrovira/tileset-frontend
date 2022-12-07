@@ -946,24 +946,14 @@ select{
   margin-bottom: 0.5rem;
 }
 
-.mx-\[2\.25rem\]{
-  margin-left: 2.25rem;
-  margin-right: 2.25rem;
+.mx-\[0\.75rem\]{
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
 }
 
 .my-\[2rem\]{
   margin-top: 2rem;
   margin-bottom: 2rem;
-}
-
-.mx-\[0\.5rem\]{
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-}
-
-.mx-\[0\.75rem\]{
-  margin-left: 0.75rem;
-  margin-right: 0.75rem;
 }
 
 .mr-3{
@@ -1362,14 +1352,6 @@ select{
 
 .max-w-lg{
   max-width: 32rem;
-}
-
-.max-w-\[80\%\]{
-  max-width: 80%;
-}
-
-.max-w-\[90\%\]{
-  max-width: 90%;
 }
 
 .max-w-\[8rem\]{
@@ -2375,24 +2357,14 @@ select{
   background-color: rgb(184 46 56 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-tileset-blue-1:hover{
-  --tw-bg-opacity: 1;
-  background-color: rgb(50 88 113 / var(--tw-bg-opacity));
-}
-
-.hover\:bg-tileset-grey-1:hover{
-  --tw-bg-opacity: 1;
-  background-color: rgb(233 236 239 / var(--tw-bg-opacity));
-}
-
-.hover\:bg-tileset-grey-3:hover{
-  --tw-bg-opacity: 1;
-  background-color: rgb(206 212 218 / var(--tw-bg-opacity));
-}
-
 .hover\:bg-tileset-grey-4:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(173 181 189 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-tileset-blue-1:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(50 88 113 / var(--tw-bg-opacity));
 }
 
 .hover\:text-tileset-blue:hover{
@@ -2432,6 +2404,11 @@ select{
 }
 
 @media (min-width: 640px){
+  .sm\:mx-\[2\.25rem\]{
+    margin-left: 2.25rem;
+    margin-right: 2.25rem;
+  }
+
   .sm\:my-8{
     margin-top: 2rem;
     margin-bottom: 2rem;
@@ -2440,26 +2417,6 @@ select{
   .sm\:mx-0{
     margin-left: 0px;
     margin-right: 0px;
-  }
-
-  .sm\:my-\[2rem\]{
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-  }
-
-  .sm\:mx-\[2\.25rem\]{
-    margin-left: 2.25rem;
-    margin-right: 2.25rem;
-  }
-
-  .sm\:mx-\[0\.5rem\]{
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
-  }
-
-  .sm\:mx-\[1rem\]{
-    margin-left: 1rem;
-    margin-right: 1rem;
   }
 
   .sm\:ml-3{
@@ -2498,16 +2455,16 @@ select{
     width: 2.5rem;
   }
 
-  .sm\:max-w-lg{
-    max-width: 32rem;
+  .sm\:max-w-\[80\%\]{
+    max-width: 80%;
   }
 
   .sm\:max-w-\[90\%\]{
     max-width: 90%;
   }
 
-  .sm\:max-w-\[80\%\]{
-    max-width: 80%;
+  .sm\:max-w-lg{
+    max-width: 32rem;
   }
 
   .sm\:flex-row-reverse{
@@ -2526,12 +2483,12 @@ select{
     overflow: hidden;
   }
 
-  .sm\:rounded-md{
-    border-radius: 0.375rem;
-  }
-
   .sm\:rounded-lg{
     border-radius: 0.5rem;
+  }
+
+  .sm\:rounded-md{
+    border-radius: 0.375rem;
   }
 
   .sm\:p-0{

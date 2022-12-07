@@ -38,7 +38,7 @@ function deleteOption() {
           </button>
           <div class="text-left w-full">{{ props.data.text }}</div>
           <button
-            @click="deleteOption"
+            @click.stop="deleteOption"
             class="bg-tileset-red p-1 ml-2 text-sm font-medium text-white rounded hover:bg-tileset-red-1"
           >
             <svg
