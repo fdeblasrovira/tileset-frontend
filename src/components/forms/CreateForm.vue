@@ -16,15 +16,17 @@ const formData = reactive({
   results: [],
 });
 
-
-function updateAttributes(newAttributes){
-  formData.attributes = newAttributes
+function updateAttributes(newAttributes) {
+  formData.attributes = newAttributes;
 }
 
-function updateQuestions(newQuestions){
-  formData.questions = newQuestions
+function updateQuestions(newQuestions) {
+  formData.questions = newQuestions;
 }
 
+function updateResults(newResults) {
+  formData.results = newResults;
+}
 
 function saveContents() {}
 </script>
@@ -48,7 +50,13 @@ function saveContents() {}
         :attributes="formData.attributes"
         v-if="tabData.currentTab == 3"
         @on-question-change="updateQuestions"
-        />
+      />
+      <Results
+        :results="formData.results"
+        :attributes="formData.attributes"
+        v-if="tabData.currentTab == 4"
+        @on-result-change="updateResults"
+      />
       <FullButton
         @click="saveContents"
         text="Save"
@@ -72,10 +80,6 @@ function saveContents() {}
       </FullButton>
     </div>
   </div>
-
-  
-  
-  
 </template>
 
 <!-- <div class="block text-sm font-medium mt-3">

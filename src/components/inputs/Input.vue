@@ -4,7 +4,7 @@ const emits = defineEmits(["update:modelValue"]);
 </script>
 
 <template>
-  <label :for="props.name" class="block font-medium"
+  <label :for="props.name" class="block font-medium w-full"
     >{{ props.label }}
     <input
       :type="props.type"

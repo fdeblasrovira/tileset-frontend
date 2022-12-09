@@ -1,3 +1,5 @@
+const pictureFolder = "src/assets/pictures/"
+
 const attributeList = [
   {
     min: "-5",
@@ -211,6 +213,33 @@ const selectQuestionList = [
   },
 ];
 
+const resultList = [
+  {
+    name: "Cat",
+    description: "When were you born?",
+    picture: pictureFolder + "cat.jpg",
+    attributeValues: {}
+  },
+  {
+    name: "Dog",
+    description: "When were you born?",
+    picture: pictureFolder + "dog.jpg",
+    attributeValues: {}
+  },
+  {
+    name: "Doctor",
+    description: "When were you born?",
+    picture: pictureFolder + "doctor.jpg",
+    attributeValues: {}
+  },
+  {
+    name: "Tennis Player",
+    description: "When were you born?",
+    picture: pictureFolder + "tennisPlayer.jpg",
+    attributeValues: {}
+  },
+];
+
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
@@ -243,8 +272,13 @@ const defaultSelectQuestion = function () {
   return {...selectQuestionList[getRandomInt(selectQuestionList.length)]};
 };
 
+const defaultResult = function () {
+  return {...resultList[getRandomInt(resultList.length)]};
+};
+
 export default {
   defaultAttribute,
+  defaultResult,
   defaultInputQuestion,
   defaultTextareaQuestion,
   defaultDateQuestion,
