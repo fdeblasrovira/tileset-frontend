@@ -1,6 +1,8 @@
 <script setup>
-const props = defineProps(["data", "attributes", "open", "close"]);
-const emit = defineEmits(["listOptionClicked", "deleteOption"]);
+import { watch, reactive } from "vue";
+import Input from "../../inputs/Input.vue";
+const props = defineProps(["data", "attributes", "open", "close", "index"]);
+const emit = defineEmits(["listOptionClicked", "deleteOption", "onOptionsChange"]);
 
 function openListItem() {
   emit("listOptionClicked");
@@ -10,40 +12,72 @@ function deleteOption() {
   emit("deleteOption");
 }
 
-function calculateAttributeStyle(direction, attribute){
-  let modifier = typeof props.data.actions[attribute.id] == 'undefined' ? 0 : props.data.actions[attribute.id];
-  let totalValue = Math.round(Math.abs(attribute.max - attribute.min) / 2);
-  if (direction == "right" && modifier > 0){
-    let percentage = Math.round(Math.abs(modifier) / Math.abs(totalValue) * 100)
-    return `background: linear-gradient(90deg, ${attribute.rightColor} ${percentage}%, #f4f3ee ${percentage}%); border-radius: 3px;`
-  }
-  else if (direction == "left" && modifier < 0){
-    let percentage = Math.round(Math.abs(modifier) / Math.abs(totalValue) * 100)
+const options = reactive(props.data);
+
+// After any change to the questions, we tell the parent component to update the value
+watch(options, (newOptions) => {
+  console.log("onOptionsChange")
+  emit("onOptionsChange", newOptions, props.index);
+});
+
+
+function calculateAttributeStyle(direction, attribute) {
+  let modifier =
+    typeof options.actions[attribute.id] == "undefined"
+      ? 0
+      : options.actions[attribute.id];
+  let totalValue = Math.round(Math.abs(attribute.max - attribute.min));
+  if (direction == "right" && modifier > 0) {
+    let percentage = Math.round(
+      (Math.abs(modifier) / Math.abs(totalValue)) * 100
+    );
+    return `background: linear-gradient(90deg, ${attribute.rightColor} ${percentage}%, #f4f3ee ${percentage}%); border-radius: 3px;`;
+  } else if (direction == "left" && modifier < 0) {
+    let percentage = Math.round(
+      (Math.abs(modifier) / Math.abs(totalValue)) * 100
+    );
     let remaining = 100 - percentage;
-    return `background: linear-gradient(90deg, #f4f3ee ${remaining}%, ${attribute.leftColor} ${remaining}%); border-radius: 3px;`
+    return `background: linear-gradient(90deg, #f4f3ee ${remaining}%, ${attribute.leftColor} ${remaining}%); border-radius: 3px;`;
   }
 }
 
-function increaseModifier(attribute){
+function increaseModifier(attribute) {
   // If a modifier does not exist, create it and set value to 1
-  if (typeof props.data.actions[attribute.id] == 'undefined'){
-    props.data.actions[attribute.id] = 1
+  if (typeof options.actions[attribute.id] == "undefined") {
+    options.actions[attribute.id] = 1;
   }
   // If it exist, add 1
-  else{
-    props.data.actions[attribute.id]++
+  else {
+    options.actions[attribute.id]++;
   }
+
+  emit("onOptionsChange", options, props.index);
 }
 
-function decreaseModifier(attribute){
+function decreaseModifier(attribute) {
   // If a modifier does not exist, create it and set value to -1
-  if (typeof props.data.actions[attribute.id] == 'undefined'){
-    props.data.actions[attribute.id] = -1
+  if (typeof options.actions[attribute.id] == "undefined") {
+    options.actions[attribute.id] = -1;
   }
   // If it exist, substract 1
-  else{
-    props.data.actions[attribute.id]--
+  else {
+    options.actions[attribute.id]--;
   }
+
+  emit("onOptionsChange", options, props.index);
+}
+
+function calculateInvisibility(direction, attribute) {
+  if (typeof options.actions[attribute.id] == "undefined") return false;
+
+  let modifier = options.actions[attribute.id];
+  let totalValue = Math.round(Math.abs(attribute.max - attribute.min));
+
+  if (direction == "left" && modifier < 0) {
+    return modifier <= -totalValue;
+  } else if (direction == "right" && modifier > 0) {
+    return modifier >= totalValue;
+  } else return false;
 }
 </script>
 
@@ -72,7 +106,7 @@ function decreaseModifier(attribute){
               />
             </svg>
           </button>
-          <div class="text-left w-full">{{ props.data.text }}</div>
+          <div class="text-left w-full">{{ options.text }}</div>
           <button
             @click.stop="deleteOption"
             class="bg-tileset-red p-1 ml-2 text-sm font-medium text-white rounded hover:bg-tileset-red-1"
@@ -103,16 +137,21 @@ function decreaseModifier(attribute){
     ]"
     class="bg-tileset-white w-full border-none"
   >
+  <div class="p-2">
+  <Input v-model="options.text" label="Label" type="text" />
+</div>
     <div
       v-for="attribute in props.attributes"
       class="flex flex-row flex-nowrap justify-between items-center h-full overflow-hidden flex-wrap p-2"
     >
-      <div class="flex grow shrink-0 basis-0 w-0"
-      :style="calculateAttributeStyle('left', attribute)">
+      <div
+        class="flex grow shrink-0 basis-0 w-0"
+        :style="calculateAttributeStyle('left', attribute)"
+      >
         <button
           @click="decreaseModifier(attribute)"
-          class=" bg-tileset-grey-2 p-1 text-sm font-medium text-white rounded hover:bg-tileset-grey-4"
-          :class="{invisible: typeof props.data.actions[attribute.id] !== 'undefined' && attribute.min >= props.data.actions[attribute.id]}"
+          class="bg-tileset-grey-2 p-1 text-sm font-medium text-white rounded hover:bg-tileset-grey-4"
+          :class="{ invisible: calculateInvisibility('left', attribute) }"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -130,16 +169,17 @@ function decreaseModifier(attribute){
           </svg>
         </button>
         <p class="ml-2 text-left">{{ attribute.leftLabel }}</p>
-
       </div>
-      <div class="flex grow shrink-0 justify-end basis-0 w-0"
-        :style="calculateAttributeStyle('right', attribute)">
+      <div
+        class="flex grow shrink-0 justify-end basis-0 w-0"
+        :style="calculateAttributeStyle('right', attribute)"
+      >
         <p class="mr-2 text-right">{{ attribute.rightLabel }}</p>
 
         <button
           @click="increaseModifier(attribute)"
           class="bg-tileset-grey-2 p-1 text-sm font-medium text-white rounded hover:bg-tileset-grey-4"
-          :class="{invisible: typeof props.data.actions[attribute.id] !== 'undefined' && attribute.max <= props.data.actions[attribute.id]}"
+          :class="{ invisible: calculateInvisibility('right', attribute) }"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

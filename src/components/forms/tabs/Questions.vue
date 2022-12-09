@@ -1,5 +1,5 @@
 <script setup>
-import { watch, ref, isProxy, toRaw } from "vue";
+import { watch, ref, toRaw } from "vue";
 import Input from "../../inputs/Input.vue";
 import Textarea from "../../inputs/Textarea.vue";
 import Date from "../../inputs/Date.vue";
@@ -84,10 +84,31 @@ function editQuestion() {
     return;
   }
 
+  // Each option needs a label text
+  let validationErrorFlag = false;
+
+  editingOptions.value.forEach((element) => {
+    console.log(element.text.trim())
+    if (element.text.trim().length <= 0){
+      questionModalErrorMessage.value = "The option text can't be blank";
+      validationErrorFlag = true;
+    }
+  });
+
+  if (validationErrorFlag) return;
+
   // Commit changes
   showQuestionEditModal.value = false;
-  editingQuestion.value.options = [...editingOptions.value];
-  questions.value[selectedQuestion.value] = { ...editingQuestion.value };
+  let clonedOptions = JSON.parse(JSON.stringify(editingOptions.value));
+
+  questions.value[selectedQuestion.value] = JSON.parse(
+    JSON.stringify(editingQuestion.value)
+  );
+  questions.value[selectedQuestion.value].options = clonedOptions;
+
+  questions.value[selectedQuestion.value].options.forEach((element, index) => {
+    element.actions = { ...editingOptions.value[index].actions };
+  });
 }
 
 function deleteQuestion() {
@@ -143,6 +164,17 @@ function deleteOption(index) {
   // reset accordion values
   openedOption.value = -1;
   lastOpenedOption.value = -1;
+}
+
+// Changes one of the options of a question
+function changeOption(event, index) {
+  console.log("changeOption");
+  editingOptions.value[index] = { ...event };
+  console.log(editingOptions.value[index]);
+}
+
+function addOption(){
+  editingOptions.value.push({text: "", actions:{}})
 }
 </script>
 
@@ -263,7 +295,11 @@ function deleteOption(index) {
       </div>
     </template>
     <div class="flex">
-      <Select label="" class="w-full sm:w-1/3 mr-4 mt-5" v-model="addQuestionSelectValue">
+      <Select
+        label=""
+        class="w-full sm:w-1/3 mr-4 mt-5"
+        v-model="addQuestionSelectValue"
+      >
         <option value="input">Single line text</option>
         <option value="textarea">Multiple line text</option>
         <option value="date">Date</option>
@@ -393,11 +429,35 @@ function deleteOption(index) {
               v-for="(option, index) in editingOptions"
               @list-option-clicked="onListOptionClicked(index)"
               @delete-option="deleteOption(index)"
+              @on-options-change="changeOption"
+              :index="index"
               :attributes="attributes"
               :data="{ ...option }"
               :open="openedOption == index"
               :close="lastOpenedOption == index"
             />
+          </div>
+          <div class="flex px-2 w-full justify-center">
+            <button
+              @click="addOption()"
+              type="button"
+              class="flex w-2/3 justify-center rounded-md border border-transparent bg-tileset-blue px-4 py-2 text-base font-medium text-tileset-full-white shadow-sm hover:bg-tileset-blue-1 focus:outline-none sm:text-sm"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="3.5"
+                stroke="currentColor"
+                class="w-4 h-4 pt-1 pr-1 stroke-tileset-white"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 6v12m6-6H6"
+                /></svg
+              >Add
+            </button>
           </div>
         </template>
       </div>
