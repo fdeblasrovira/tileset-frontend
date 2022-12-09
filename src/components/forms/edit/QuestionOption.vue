@@ -9,6 +9,42 @@ function openListItem() {
 function deleteOption() {
   emit("deleteOption");
 }
+
+function calculateAttributeStyle(direction, attribute){
+  let modifier = typeof props.data.actions[attribute.id] == 'undefined' ? 0 : props.data.actions[attribute.id];
+  let totalValue = Math.round(Math.abs(attribute.max - attribute.min) / 2);
+  if (direction == "right" && modifier > 0){
+    let percentage = Math.round(Math.abs(modifier) / Math.abs(totalValue) * 100)
+    return `background: linear-gradient(90deg, ${attribute.rightColor} ${percentage}%, #f4f3ee ${percentage}%); border-radius: 3px;`
+  }
+  else if (direction == "left" && modifier < 0){
+    let percentage = Math.round(Math.abs(modifier) / Math.abs(totalValue) * 100)
+    let remaining = 100 - percentage;
+    return `background: linear-gradient(90deg, #f4f3ee ${remaining}%, ${attribute.leftColor} ${remaining}%); border-radius: 3px;`
+  }
+}
+
+function increaseModifier(attribute){
+  // If a modifier does not exist, create it and set value to 1
+  if (typeof props.data.actions[attribute.id] == 'undefined'){
+    props.data.actions[attribute.id] = 1
+  }
+  // If it exist, add 1
+  else{
+    props.data.actions[attribute.id]++
+  }
+}
+
+function decreaseModifier(attribute){
+  // If a modifier does not exist, create it and set value to -1
+  if (typeof props.data.actions[attribute.id] == 'undefined'){
+    props.data.actions[attribute.id] = -1
+  }
+  // If it exist, substract 1
+  else{
+    props.data.actions[attribute.id]--
+  }
+}
 </script>
 
 <template>
@@ -71,9 +107,12 @@ function deleteOption() {
       v-for="attribute in props.attributes"
       class="flex flex-row flex-nowrap justify-between items-center h-full overflow-hidden flex-wrap p-2"
     >
-      <div class="flex grow-0">
+      <div class="flex grow shrink-0 basis-0 w-0"
+      :style="calculateAttributeStyle('left', attribute)">
         <button
-          class="bg-tileset-grey-2 p-1 text-sm font-medium text-white rounded hover:bg-tileset-grey-4"
+          @click="decreaseModifier(attribute)"
+          class=" bg-tileset-grey-2 p-1 text-sm font-medium text-white rounded hover:bg-tileset-grey-4"
+          :class="{invisible: typeof props.data.actions[attribute.id] !== 'undefined' && attribute.min >= props.data.actions[attribute.id]}"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -93,11 +132,14 @@ function deleteOption() {
         <p class="ml-2 text-left">{{ attribute.leftLabel }}</p>
 
       </div>
-      <div class="flex grow-0">
+      <div class="flex grow shrink-0 justify-end basis-0 w-0"
+        :style="calculateAttributeStyle('right', attribute)">
         <p class="mr-2 text-right">{{ attribute.rightLabel }}</p>
 
         <button
+          @click="increaseModifier(attribute)"
           class="bg-tileset-grey-2 p-1 text-sm font-medium text-white rounded hover:bg-tileset-grey-4"
+          :class="{invisible: typeof props.data.actions[attribute.id] !== 'undefined' && attribute.max <= props.data.actions[attribute.id]}"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

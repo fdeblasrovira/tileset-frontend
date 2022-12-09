@@ -263,7 +263,7 @@ function deleteOption(index) {
       </div>
     </template>
     <div class="flex">
-      <Select label="" class="w-1/3 mr-4 mt-5" v-model="addQuestionSelectValue">
+      <Select label="" class="w-full sm:w-1/3 mr-4 mt-5" v-model="addQuestionSelectValue">
         <option value="input">Single line text</option>
         <option value="textarea">Multiple line text</option>
         <option value="date">Date</option>
