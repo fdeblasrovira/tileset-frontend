@@ -64,7 +64,7 @@ function openListItem(e) {
       props.open ? 'itemListOpen' : '',
       props.close ? 'itemListClose' : '',
     ]"
-    class="flex bg-tileset-white w-full border-none h-0"
+    class="flex bg-tileset-white w-full border-none h-0 overflow-hidden"
   >
     <div
       class="flex grow flex-row h-full overflow-hidden p-4"

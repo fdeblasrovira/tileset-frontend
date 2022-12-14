@@ -1092,6 +1092,10 @@ select{
   margin-top: 1.75rem;
 }
 
+.-mt-3{
+  margin-top: -0.75rem;
+}
+
 .mt-\[2rem\]{
   margin-top: 2rem;
 }
@@ -1102,10 +1106,6 @@ select{
 
 .mt-\[-22px\]{
   margin-top: -22px;
-}
-
-.-mt-3{
-  margin-top: -0.75rem;
 }
 
 .block{
@@ -1322,10 +1322,6 @@ select{
 
 .w-0{
   width: 0px;
-}
-
-.w-1\/2{
-  width: 50%;
 }
 
 .w-2\/3{
