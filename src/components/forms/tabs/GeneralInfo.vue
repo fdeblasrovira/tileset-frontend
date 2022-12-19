@@ -20,7 +20,7 @@ import Radio from "../../inputs/Radio.vue";
       name="form-description"
       placeholder="Description of the form"
     />
-    <AvatarPicture label="Form picture" />
+    <AvatarPicture label="Form picture" image="" />
     <div class="block text-sm font-medium mt-3">
       <label class="block text-base font-medium">Visibility</label>
 

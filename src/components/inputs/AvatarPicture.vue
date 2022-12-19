@@ -1,17 +1,18 @@
 <script setup>
 import { ref } from "vue";
-const props = defineProps(["label"]);
+const props = defineProps(["label", "image", "modelValue"]);
+const emits = defineEmits(["update:modelValue"]);
 
-const image = ref("");
+const image = ref(props.image);
 
 function previewFiles(event) {
-  console.log(event.target.files);
   const reader = new FileReader();
   reader.addEventListener("load", () => {
     image.value = reader.result;
-    console.log(image.value);
   });
   reader.readAsDataURL(event.target.files[0]);
+
+  emits("update:modelValue", event.target.files[0])
 }
 </script>
 
@@ -23,7 +24,7 @@ function previewFiles(event) {
     <div class="my-3 flex items-center flex-col space-y-6">
       <span
         :style="{ backgroundImage: 'url(' + image + ')' }"
-        class="flex h-24 min-w-[3rem] w-24 overflow-hidden rounded-full bg-tileset-grey-2 bg-contain bg-no-repeat bg-center"
+        class="flex bg-cover h-24 min-w-[3rem] w-24 overflow-hidden rounded-full bg-tileset-grey-2 bg-contain bg-no-repeat bg-center"
       >
         <svg
           v-if="image.length <= 0"
@@ -43,6 +44,7 @@ function previewFiles(event) {
       </span>
       <input
         @change="previewFiles"
+        @input="$emit('update:modelValue', $event.target.value)"
         type="file"
         id="image-input"
         class="flex w-full focus:outline-tileset-blue rounded-md border border-tileset-grey-5 focus:border-tileset-blue focus:ring-tileset-blue py-2 px-3 text-sm font-normal  shadow-sm"

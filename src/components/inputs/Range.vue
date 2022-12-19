@@ -36,6 +36,16 @@ const background = computed(
       <div></div>
     </div>
     <input
+      v-if="props.editable === true"
+      type="range"
+      :value="props.defaultValue"
+      :min="props.min"
+      :max="props.max"
+      class="w-full z-10 absolute"
+      :style="background"
+    />
+    <input
+      v-else
       type="range"
       :value="props.defaultValue"
       :min="props.min"

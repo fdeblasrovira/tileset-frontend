@@ -1,19 +1,20 @@
 <script setup>
 import Input from "../../inputs/Input.vue";
-import Textarea from "../../inputs/Textarea.vue";
 const props = defineProps(["data", "index", "open", "close"]);
-const emit = defineEmits(["resultClicked"]);
+const emit = defineEmits(["editResult", "deleteResult"]);
 
-function openListItem(e) {
-  console.log("resultClicked");
-  emit("resultClicked", props.data.id);
+function editResult() {
+  emit("editResult");
+}
+
+function deleteResult() {
+  emit("deleteResult");
 }
 </script>
 
 <template>
   <div
-    @click="openListItem"
-    class="flex flex-col container min-w-full mx-auto items-center justify-center hover:bg-tileset-grey-2 bg-tileset-grey-1 dark:bg-gray-800 shadow list-item-container"
+    class="flex flex-col container min-w-full mx-auto items-center justify-center bg-tileset-grey-1 dark:bg-gray-800 shadow list-item-container"
   >
     <ul class="flex flex-col w-full">
       <li class="flex flex-row">
@@ -37,132 +38,53 @@ function openListItem(e) {
               {{ props.data.description }}
             </div>
           </div>
-
-          <button class="w-10 text-right flex justify-end">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-6 transition-all"
-              :class="[props.open && !props.close ? '-rotate-90' : 'rotate-90']"
+          <div class="flex justify-between">
+            <button
+              @click="editResult()"
+              type="button"
+              class="flex w-10 h-10 mx-2 rounded-md border border-transparent bg-tileset-blue text-base font-medium text-tileset-full-white shadow-sm hover:bg-tileset-blue-1 focus:outline-none sm:text-sm"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5"
-              />
-            </svg>
-          </button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+                stroke="currentColor"
+                class="m-auto w-6 h-6 stroke-tileset-white"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                />
+              </svg>
+            </button>
+            <button
+              @click="deleteResult()"
+              type="button"
+              class="flex w-10 h-10 mx-2 rounded-md border border-transparent bg-tileset-red text-base font-medium text-tileset-full-white shadow-sm hover:bg-tileset-red-1 focus:outline-none sm:text-sm"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+                stroke="currentColor"
+                class="m-auto w-6 h-6 stroke-tileset-white"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
       </li>
     </ul>
   </div>
-  <div
-    v-bind:class="[
-      props.open ? 'itemListOpen' : '',
-      props.close ? 'itemListClose' : '',
-    ]"
-    class="flex bg-tileset-white w-full border-none h-0 overflow-hidden"
-  >
-    <div
-      class="flex grow flex-row h-full overflow-hidden p-4"
-    >
-        <Input v-model="props.data.name" label="Name" type="text" />
-    </div>
-  </div>
+
 </template>
 
-<style scoped>
-@media screen and (max-width: 407px) {
-  @keyframes expand {
-    from {
-      height: 0px;
-    }
-    to {
-      height: 228px;
-    }
-  }
-
-  @keyframes collapse {
-    from {
-      height: 228px;
-    }
-    to {
-      height: 0px;
-    }
-  }
-  .itemListOpen {
-    margin-top: 0 !important;
-    height: 228px;
-    animation-name: expand;
-    animation-duration: 0.3s;
-  }
-  .itemListClose {
-    height: 0px;
-    animation-name: collapse;
-    animation-duration: 0.3s;
-  }
-}
-@media screen and (min-width: 408px) {
-  @keyframes expand {
-    from {
-      height: 0px;
-    }
-    to {
-      height: 152px;
-    }
-  }
-
-  @keyframes collapse {
-    from {
-      height: 152px;
-    }
-    to {
-      height: 0px;
-    }
-  }
-  .itemListOpen {
-    margin-top: 0 !important;
-    height: 152px;
-    animation-name: expand;
-    animation-duration: 0.3s;
-  }
-  .itemListClose {
-    height: 0px;
-    animation-name: collapse;
-    animation-duration: 0.3s;
-  }
-}
-@media screen and (min-width: 703px) {
-  @keyframes expand {
-    from {
-      height: 0px;
-    }
-    to {
-      height: 76px;
-    }
-  }
-
-  @keyframes collapse {
-    from {
-      height: 76px;
-    }
-    to {
-      height: 0px;
-    }
-  }
-  .itemListOpen {
-    margin-top: 0 !important;
-    height: 76px;
-    animation-name: expand;
-    animation-duration: 0.3s;
-  }
-  .itemListClose {
-    height: 0px;
-    animation-name: collapse;
-    animation-duration: 0.3s;
-  }
-}
-</style>
+<style scoped></style>

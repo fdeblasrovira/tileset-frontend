@@ -2,7 +2,8 @@
 import { watch, ref } from "vue";
 import Input from "../../inputs/Input.vue";
 import Textarea from "../../inputs/Textarea.vue";
-import Date from "../../inputs/Date.vue";
+import AvatarPicture from "../../inputs/AvatarPicture.vue";
+import Range from "../../inputs/Range.vue";
 import Radio from "../../inputs/Radio.vue";
 import Checkbox from "../../inputs/Checkbox.vue";
 import Select from "../../inputs/Select.vue";
@@ -27,14 +28,18 @@ watch(results, (newResults) => {
 // Toggle for the delete modal
 const showResultDeleteModal = ref(false);
 
-const openedResult = ref(-1);
-const lastOpenedResult = ref(-1);
+// Toggle for the edit modals
+const showResultEditModal = ref(false);
 
-function onResultClicked(index) {
-    lastOpenedResult.value =
-    openedResult.value == lastOpenedResult.value ? 0 : openedResult.value;
-    openedResult.value = index;
-}
+// Validation message that will display in the edit modal.
+const resultModalErrorMessage = ref("");
+
+/* 
+    It stores the data of the edit modal.
+    Once the user presses 'Save', this data will overwrite the selected item data.
+    If the user presses 'Cancel', this data will be discarded.
+*/
+let editingResult = ref(null);
 
 // It keeps a reference to the selected item by the user
 const selectedResult = ref(null);
@@ -43,6 +48,18 @@ const selectedResult = ref(null);
 function displayResultDeleteModal(display, index) {
   showResultDeleteModal.value = display;
   selectedResult.value = index;
+}
+
+// Toggle edit modal
+function displayResultEditModal(display, index) {
+  // Resets the error message to an empty value
+  resultModalErrorMessage.value = "";
+  selectedResult.value = index;
+
+  // Initializes the editor data with the current saved data
+  editingResult.value = { ...results.value[index] };
+
+  showResultEditModal.value = true;
 }
 
 function deleteResult() {
@@ -76,14 +93,15 @@ function addResult() {
       There are no results yet
     </div>
     <ResultOption
-        v-for="(result, index) in results"
-        @result-clicked="onResultClicked"
-        :data="result"
-        :key="result.id"
-        :index="index"
-        :open="openedResult == result.id"
-        :close="lastOpenedResult == result.id"
-      />
+      v-for="(result, index) in results"
+      @delete-result="displayResultDeleteModal(true, index)"
+      @edit-result="displayResultEditModal(true, index)"
+      :data="result"
+      :key="result.id"
+      :index="index"
+      :open="openedResult == result.id"
+      :close="lastOpenedResult == result.id"
+    />
     <FullButton
       @click="addResult()"
       text="Add"
@@ -109,8 +127,8 @@ function addResult() {
   <!-- Result delete modal -->
   <Modal
     :open="showResultDeleteModal"
-    title="Delete question"
-    description="Are you sure you want to delete this question?"
+    title="Delete result"
+    description="Are you sure you want to delete this result?"
     svgBackgroundColor="bg-tileset-red"
   >
     <template #svg>
@@ -143,6 +161,93 @@ function addResult() {
           @click="showResultDeleteModal = false"
           type="button"
           class="mt-3 inline-flex w-full justify-center rounded-md border border-tileset-grey-5 px-4 py-2 text-base font-medium shadow-sm hover:bg-gray-50 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+        >
+          Cancel
+        </button>
+      </div>
+    </template>
+    <!-- Result delete modal -->
+  </Modal>
+  <!-- Result edit modal -->
+  <Modal
+    :open="showResultEditModal"
+    title="Edit result"
+    description="Edit the result's parameters"
+    svgBackgroundColor="bg-tileset-blue"
+  >
+    <template #svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-6 h-6 stroke-tileset-white"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+        />
+      </svg>
+    </template>
+
+    <template #contents>
+      <span class="flex my-2 p-[1px] bg-tileset-grey-2"></span>
+      <div class="space-y-3 mt-3">
+        <Input
+          v-model="editingResult.name"
+          label="Name"
+          :name="editingResult.id"
+          type="text"
+        />
+        <Textarea
+          v-model="editingResult.description"
+          label="Description"
+          :name="editingResult.id"
+        />
+        <AvatarPicture
+          v-model="editingResult.picture"
+          :image="editingResult.picture"
+          label="Picture"
+        />
+        <template v-for="(attribute) in attributes" :key="attribute.id">
+          <div
+            class="border rounded-md border-tileset-grey-2 space-y-3 px-4 py-5 sm:p-6"
+          >
+            <Range
+              :min="attribute.min"
+              :max="attribute.max"
+              :defaultValue="attribute.defaultValue"
+              :leftColor="attribute.leftColor"
+              :leftLabel="attribute.leftLabel"
+              :rightColor="attribute.rightColor"
+              :rightLabel="attribute.rightLabel"
+            >
+            </Range>
+          </div>
+        </template>
+      </div>
+    </template>
+    <template #buttons>
+      <p
+        v-if="resultModalErrorMessage.length > 0"
+        class="font-light text-tileset-red text-right text-sm italic px-4 sm:px-6"
+      >
+        {{ resultModalErrorMessage }}
+      </p>
+      <div class="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+        <button
+          @click="editResult()"
+          type="button"
+          class="inline-flex w-full justify-center rounded-md border border-transparent bg-tileset-green px-4 py-2 text-base font-medium text-tileset-full-white shadow-sm hover:bg-tileset-green-1 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
+        >
+          Save
+        </button>
+        <button
+          @click="showResultEditModal = false"
+          type="button"
+          class="mt-3 inline-flex w-full justify-center rounded-md border border-tileset-grey-5 px-4 py-2 text-base font-medium shadow-sm sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
         >
           Cancel
         </button>
