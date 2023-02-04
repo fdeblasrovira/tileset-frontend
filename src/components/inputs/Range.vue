@@ -1,6 +1,8 @@
 <script setup>
 import { ref, computed } from "vue";
+const emits = defineEmits(["update:modelValue"]);
 const props = defineProps([
+  "editable",
   "min",
   "max",
   "defaultValue",
@@ -8,7 +10,12 @@ const props = defineProps([
   "leftLabel",
   "rightColor",
   "rightLabel",
+  "modelValue"
 ]);
+
+function onRangeChange(event){
+  emits("update:modelValue", event.target.value)
+}
 
 const currentValue = ref(props.defaultValue);
 
@@ -37,6 +44,7 @@ const background = computed(
     </div>
     <input
       v-if="props.editable === true"
+      @input="onRangeChange"
       type="range"
       :value="props.defaultValue"
       :min="props.min"

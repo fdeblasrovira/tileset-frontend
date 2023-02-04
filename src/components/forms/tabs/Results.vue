@@ -79,6 +79,34 @@ function addResult() {
   results.value.push({ ...result });
   console.log(results.value);
 }
+
+// Edits the result with the data in the edit modal
+function editResult() {
+  // Check if the name is set
+  // If not, display error message
+  if (editingResult.value.name.length <= 0) {
+    resultModalErrorMessage.value =
+      "The name can't be empty";
+    return;
+  }
+
+  // Check if the name is set
+  // If not, display error message
+  if (editingResult.value.description.length <= 0) {
+    resultModalErrorMessage.value =
+      "The description can't be empty";
+    return;
+  }
+
+  console.log("results")
+  console.log(results.value[selectedResult.value])
+
+  console.log("editingResult.value")
+  console.log(editingResult.value)
+  // Commit changes
+  showResultEditModal.value = false;
+  results.value[selectedResult.value] = {...editingResult.value};
+}
 </script>
 
 <template>
@@ -216,6 +244,7 @@ function addResult() {
             class="border rounded-md border-tileset-grey-2 space-y-3 px-4 py-5 sm:p-6"
           >
             <Range
+              :editable="true"
               :min="attribute.min"
               :max="attribute.max"
               :defaultValue="attribute.defaultValue"
