@@ -81,6 +81,20 @@ function editAttribute() {
     editingAttribute.value.defaultValue
   );
 
+  // Check if the labels are set
+  // If not, display error message
+  if (editingAttribute.value.leftLabel.length <= 0) {
+    attributeModalErrorMessage.value =
+      "The left label can't be empty";
+    return;
+  }
+
+  if (editingAttribute.value.rightLabel.length <= 0) {
+    attributeModalErrorMessage.value =
+      "The right label can't be empty";
+    return;
+  }
+
   // Check if min is smaller than max
   // If not, display error message
   if (editingAttribute.value.min > editingAttribute.value.max) {
