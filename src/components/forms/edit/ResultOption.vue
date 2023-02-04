@@ -14,12 +14,12 @@ function deleteResult() {
 
 <template>
   <div
-    class="flex flex-col container min-w-full mx-auto items-center justify-center bg-tileset-grey-1 dark:bg-gray-800 shadow list-item-container"
+    class="flex flex-col container min-w-full mx-auto items-center justify-center bg-tileset-grey-1 shadow list-item-container"
   >
     <ul class="flex flex-col w-full">
       <li class="flex flex-row">
         <div
-          class="select-none cursor-pointer hover:bg-gray-50 flex flex-1 items-center p-4"
+          class="hover:bg-gray-50 flex flex-1 items-center p-4"
         >
           <div class="flex flex-col w-10 h-10 justify-center items-center mr-4">
             <a href="#" class="block relative">

@@ -84,7 +84,7 @@ function onTabClick(tabNumber) {
     </ul>
   </div>
 
-  <div class="flex justify-center grow">
+  <div class="flex justify-center grow z-10">
     <div
       class="relative mb-[2rem] flex grow sm:max-w-[80%] xl:max-w-[1024px] 2xl:max-w-[1024px] h-[100%] bg-tileset-full-white shadow-2xl p-6 sm:rounded-lg"
     >
