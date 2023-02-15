@@ -88,8 +88,8 @@ function editQuestion() {
   let validationErrorFlag = false;
 
   editingOptions.value.forEach((element) => {
-    console.log(element.text.trim())
-    if (element.text.trim().length <= 0){
+    console.log(element.text.trim());
+    if (element.text.trim().length <= 0) {
       questionModalErrorMessage.value = "The option text can't be blank";
       validationErrorFlag = true;
     }
@@ -173,8 +173,8 @@ function changeOption(event, index) {
   console.log(editingOptions.value[index]);
 }
 
-function addOption(){
-  editingOptions.value.push({text: "", actions:{}})
+function addOption() {
+  editingOptions.value.push({ text: "", actions: {} });
 }
 </script>
 
@@ -441,22 +441,23 @@ function addOption(){
             <button
               @click="addOption()"
               type="button"
-              class="flex w-2/3 justify-center rounded-md border border-transparent bg-tileset-blue px-4 py-2 text-base font-medium text-tileset-full-white shadow-sm hover:bg-tileset-blue-1 focus:outline-none sm:text-sm"
+              class="flex w-full justify-center rounded-md bg-tileset-blue px-4 py-2 font-bold text-tileset-full-white shadow-sm hover:bg-tileset-blue-1 focus:outline-none text-xl sm:text-lg"
             >
+              Add
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke-width="3.5"
                 stroke="currentColor"
-                class="w-4 h-4 pt-1 pr-1 stroke-tileset-white"
+                class="w-6 h-6 pt-1 ml-1 stroke-tileset-white"
               >
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   d="M12 6v12m6-6H6"
-                /></svg
-              >Add
+                />
+              </svg>
             </button>
           </div>
         </template>
