@@ -46,6 +46,7 @@ function previewFiles(event) {
         @change="previewFiles"
         @input="$emit('update:modelValue', $event.target.value)"
         type="file"
+        accept="image/*"
         id="image-input"
         class="flex w-full focus:outline-tileset-blue rounded-md border border-tileset-grey-5 focus:border-tileset-blue focus:ring-tileset-blue py-2 px-3 text-sm font-normal  shadow-sm"
       />
