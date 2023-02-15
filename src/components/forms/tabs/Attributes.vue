@@ -8,15 +8,20 @@ import DefaultValues from "../../../config/defaultValues";
 import Modal from "../../overlays/Modal.vue";
 import { v4 as uuidv4 } from "uuid";
 
-const props = defineProps(["attributes"]);
-const emits = defineEmits(["onAttributeChange"]);
+const props = defineProps(["attributes", "results"]);
+const emits = defineEmits(["onAttributeChange", "onResultChange"]);
 
 const attributes = ref(props.attributes);
+const results = ref(props.results);
 
-// After any change to the attributes, we tell the parent component to update the value
+// After any change to the attributesor results, we tell the parent component to update the value
 watch(attributes, (newAttributes) => {
   emit(onAttributeChange(newAttributes));
-})
+});
+
+watch(results, (newResults) => {
+  emit(onAttributeChange(newResults));
+});
 
 // Toggle for the delete modal
 const showAttributeDeleteModal = ref(false);
@@ -61,7 +66,7 @@ function addAttribute() {
 
   //Generate a unique ID for this specific attribute
   defaultAttribute.id = uuidv4();
-  console.log({...defaultAttribute})
+  console.log({ ...defaultAttribute });
 
   attributes.value.push({ ...defaultAttribute });
 }
@@ -84,14 +89,12 @@ function editAttribute() {
   // Check if the labels are set
   // If not, display error message
   if (editingAttribute.value.leftLabel.length <= 0) {
-    attributeModalErrorMessage.value =
-      "The left label can't be empty";
+    attributeModalErrorMessage.value = "The left label can't be empty";
     return;
   }
 
   if (editingAttribute.value.rightLabel.length <= 0) {
-    attributeModalErrorMessage.value =
-      "The right label can't be empty";
+    attributeModalErrorMessage.value = "The right label can't be empty";
     return;
   }
 
@@ -115,9 +118,26 @@ function editAttribute() {
     return;
   }
 
+  // If there are changes to attribute's min and max value the attribute values of the results need to be resetted
+  if (
+    editingAttribute.value.max != attributes.value[selectedAttribute].max ||
+    editingAttribute.value.min != attributes.value[selectedAttribute].min
+  ) {
+    let currentAttributeId = attributes.value[selectedAttribute].id;
+
+    results.value.forEach((element, index) => {
+      let resultAttributeClone = element.attributeValues
+
+      for (const [key, value] of Object.entries(resultAttributeClone)){
+        if (key === currentAttributeId) delete results.value[index].attributeValues[key]
+      }
+    });
+
+  }
+
   // Commit changes
   showAttributeEditModal.value = false;
-  attributes.value[selectedAttribute] = {...editingAttribute.value};
+  attributes.value[selectedAttribute] = { ...editingAttribute.value };
 }
 </script>
 
