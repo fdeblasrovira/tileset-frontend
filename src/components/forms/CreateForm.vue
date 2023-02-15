@@ -41,9 +41,11 @@ function saveContents() {}
       <!-- Attribute edit tab contents -->
       <Attributes
         :attributes="formData.attributes"
+        :questions="formData.questions"
         :results="formData.results"
         v-if="tabData.currentTab == 2"
         @on-attribute-change="updateAttributes"
+        @on-question-change="updateQuestions"
         @on-result-change="updateResults"
       />
       <!-- Question edit tab contents -->

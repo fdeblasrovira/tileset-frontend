@@ -8,15 +8,20 @@ import DefaultValues from "../../../config/defaultValues";
 import Modal from "../../overlays/Modal.vue";
 import { v4 as uuidv4 } from "uuid";
 
-const props = defineProps(["attributes", "results"]);
-const emits = defineEmits(["onAttributeChange", "onResultChange"]);
+const props = defineProps(["attributes", "results", "questions"]);
+const emits = defineEmits(["onAttributeChange", "onResultChange", "onQuestionChange"]);
 
 const attributes = ref(props.attributes);
+const questions = ref(props.questions);
 const results = ref(props.results);
 
-// After any change to the attributesor results, we tell the parent component to update the value
+// After any change to the attributes, questions or results, we tell the parent component to update the value
 watch(attributes, (newAttributes) => {
   emit(onAttributeChange(newAttributes));
+});
+
+watch(questions, (newQuestions) => {
+  emit(onAttributeChange(newQuestions));
 });
 
 watch(results, (newResults) => {
@@ -118,13 +123,14 @@ function editAttribute() {
     return;
   }
 
-  // If there are changes to attribute's min and max value the attribute values of the results need to be resetted
+  // If there are changes to attribute's min and max value the attribute values of the results and questions need to be resetted
   if (
     editingAttribute.value.max != attributes.value[selectedAttribute].max ||
     editingAttribute.value.min != attributes.value[selectedAttribute].min
   ) {
     let currentAttributeId = attributes.value[selectedAttribute].id;
 
+    // Reset results if they were using this attribute
     results.value.forEach((element, index) => {
       let resultAttributeClone = element.attributeValues
 
@@ -133,6 +139,14 @@ function editAttribute() {
       }
     });
 
+    // Reset questions if they were using this attribute
+    questions.value.forEach((element, index) => {
+      element.options.forEach((element2, index2) => {
+        for (const [key, value] of Object.entries(element2.actions)){
+          if (key === currentAttributeId) delete questions.value[index].options[index2].actions[key]
+        }
+      });
+    });
   }
 
   // Commit changes
