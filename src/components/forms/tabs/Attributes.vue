@@ -137,6 +137,8 @@ function editAttribute() {
         class="border rounded-md border-tileset-grey-2 space-y-3 px-4 py-5 sm:p-6"
       >
         <Range
+          v-model="attribute.defaultValue"
+          :editable="true"
           :min="attribute.min"
           :max="attribute.max"
           :defaultValue="attribute.defaultValue"
