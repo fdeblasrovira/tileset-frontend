@@ -9,7 +9,7 @@ const loadingData = useLoadingStore();
 
 <template>
   <div class="flex min-w-full min-h-screen flex-col">
-    <header class="flex min-h-min sticky top-0 z-10">
+    <header class="flex min-h-min sticky top-0 z-50">
       <NavBar />
     </header>
     <main class="flex justify-center grow overflow-y-scroll flex-col">
