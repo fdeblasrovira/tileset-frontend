@@ -58,6 +58,21 @@ function displayResultEditModal(display, index) {
 
   // Initializes the editor data with the current saved data
   editingResult.value = { ...results.value[index] };
+  editingResult.value.attributeValues = { ...results.value[index].attributeValues };
+  console.log("editingResult.value")
+  console.log(editingResult.value)
+  
+  console.log("editingResult.value.attributeValues")
+  console.log(editingResult.value.attributeValues)
+
+  console.log("index")
+  console.log(index)
+  // Initializes the attribute data of the result
+  for (const [key, value] of Object.entries(attributes.value)){
+    if (!editingResult.value.attributeValues.hasOwnProperty(value.id)){
+      editingResult.value.attributeValues[value.id] = value.defaultValue;
+    }
+  }
 
   showResultEditModal.value = true;
 }
@@ -98,14 +113,15 @@ function editResult() {
     return;
   }
 
-  console.log("results")
-  console.log(results.value[selectedResult.value])
-
-  console.log("editingResult.value")
-  console.log(editingResult.value)
   // Commit changes
   showResultEditModal.value = false;
-  results.value[selectedResult.value] = {...editingResult.value};
+  let currentResult = results.value[selectedResult.value]
+  let attributeValuesClone = {...editingResult.value.attributeValues};
+
+  currentResult = {...editingResult.value};
+  currentResult.attributeValues = attributeValuesClone;
+
+  results.value[selectedResult.value] = currentResult;
 }
 </script>
 
@@ -239,15 +255,16 @@ function editResult() {
           :image="editingResult.picture"
           label="Picture"
         />
-        <template v-for="(attribute) in attributes" :key="attribute.id">
+        <template v-for="(attribute) in attributes">
           <div
             class="border rounded-md border-tileset-grey-2 space-y-3 px-4 py-5 sm:p-6"
           >
             <Range
+              v-model="editingResult.attributeValues[attribute.id]"
               :editable="true"
               :min="attribute.min"
               :max="attribute.max"
-              :defaultValue="attribute.defaultValue"
+              :defaultValue="editingResult.attributeValues[attribute.id]"
               :leftColor="attribute.leftColor"
               :leftLabel="attribute.leftLabel"
               :rightColor="attribute.rightColor"
