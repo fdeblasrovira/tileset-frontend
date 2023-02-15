@@ -17,8 +17,6 @@ function onRangeChange(event){
   emits("update:modelValue", event.target.value)
 }
 
-const currentValue = ref(props.defaultValue);
-
 const background = computed(
   () =>
     `background: linear-gradient(90deg, ${props.leftColor} 0%, ${props.rightColor}); height:25px; border-radius: 5px;`
