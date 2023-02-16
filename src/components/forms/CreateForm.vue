@@ -28,7 +28,10 @@ function updateResults(newResults) {
   formData.results = newResults;
 }
 
-function saveContents() {}
+function saveContents() {
+  let json = JSON.stringify(formData)
+  console.log(json)
+}
 </script>
 
 <template>
