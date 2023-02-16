@@ -9,10 +9,10 @@ function previewFiles(event) {
   const reader = new FileReader();
   reader.addEventListener("load", () => {
     image.value = reader.result;
+    emits("update:modelValue", reader.result)
   });
   reader.readAsDataURL(event.target.files[0]);
 
-  emits("update:modelValue", event.target.files[0])
 }
 </script>
 
